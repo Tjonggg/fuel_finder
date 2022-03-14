@@ -6,6 +6,7 @@ class GasStationListData {
   final double latitude;
   final double longitude;
   final int id;
+  double? distance;
 
   GasStationListData({
     required this.name,
@@ -15,6 +16,7 @@ class GasStationListData {
     required this.latitude,
     required this.longitude,
     required this.id,
+    this.distance,
   });
 
   factory GasStationListData.fromJson(dynamic json) {

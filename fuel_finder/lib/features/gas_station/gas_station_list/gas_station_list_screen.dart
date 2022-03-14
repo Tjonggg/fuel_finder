@@ -40,7 +40,7 @@ class GasStationListBuilder extends StatelessWidget {
                 city: snapshot.data![index].city,
                 logo: snapshot.data![index].logo,
                 id: snapshot.data![index].id,
-                //distance: , //TODO: location + m or km
+                distance: snapshot.data?[index].distance,
               );
             },
           );

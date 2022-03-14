@@ -8,7 +8,7 @@ class GasStationListRow extends StatelessWidget {
   final String city;
   final int id;
   final String? logo;
-  final String? distance;
+  final double? distance;
 
   const GasStationListRow({
     Key? key,
@@ -35,11 +35,19 @@ class GasStationListRow extends StatelessWidget {
           children: [
             SizedBox(
               width: 50,
-              child: logo != ''
+              child: logo != null
                   ? Image.network(logo!)
                   : const Text('Logo missing'), //TODO: this can be better
             ),
-            distance != null ? Text(distance!) : const SizedBox.shrink(),
+            distance != null
+                ? Text(
+                    '${distance!.toStringAsFixed(0)} m',
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ],
         ),
         title: Text(
@@ -58,7 +66,7 @@ class GasStationListRow extends StatelessWidget {
           ),
         ),
         trailing: const Text(
-          '>',
+          '>', //TODO: change to something nice
           style: TextStyle(
             color: Colors.redAccent,
             fontWeight: FontWeight.bold,
