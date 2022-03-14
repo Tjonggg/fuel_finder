@@ -12,7 +12,7 @@ class GasStationListScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Fuel Finder'),
       ),
-      body: const GasStationListBuilder(), //TODO: search toevoegen
+      body: const GasStationListBuilder(),
     );
   }
 }
@@ -26,28 +26,44 @@ class GasStationListBuilder extends StatelessWidget {
         GasStationListController();
 
     _gasStationListController.initGasStationList();
-    return StreamBuilder(
-      stream: _gasStationListController.getGasStationListStream,
-      builder: (context, AsyncSnapshot<List<GasStationListData>> snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-            itemCount:
-                snapshot.data!.length, //TODO: nice to have handle long list
-            itemBuilder: (context, index) {
-              return GasStationListRow(
-                name: snapshot.data![index].name,
-                street: snapshot.data![index].street,
-                city: snapshot.data![index].city,
-                logo: snapshot.data![index].logo,
-                id: snapshot.data![index].id,
-                distance: snapshot.data?[index].distance,
-              );
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(0),
+          child: TextField(
+            textAlign: TextAlign.center,
+            showCursor: false,
+            onChanged: _gasStationListController.onTextFieldChanged,
+            decoration: const InputDecoration(hintText: 'Search'),
+          ),
+        ),
+        Expanded(
+          child: StreamBuilder(
+            stream: _gasStationListController.getGasStationListStream,
+            builder:
+                (context, AsyncSnapshot<List<GasStationListData>> snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot
+                      .data!.length, //TODO: nice to have handle long list
+                  itemBuilder: (context, index) {
+                    return GasStationListRow(
+                      name: snapshot.data![index].name,
+                      street: snapshot.data![index].street,
+                      city: snapshot.data![index].city,
+                      logo: snapshot.data![index].logo,
+                      id: snapshot.data![index].id,
+                      distance: snapshot.data?[index].distance,
+                    );
+                  },
+                );
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
             },
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
+          ),
+        ),
+      ],
     );
   }
 }

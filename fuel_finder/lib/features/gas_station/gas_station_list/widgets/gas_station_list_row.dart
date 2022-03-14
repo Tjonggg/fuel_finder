@@ -35,7 +35,7 @@ class GasStationListRow extends StatelessWidget {
           children: [
             SizedBox(
               width: 50,
-              child: logo != null
+              child: logo != ''
                   ? Image.network(logo!)
                   : const Text('Logo missing'), //TODO: this can be better
             ),
