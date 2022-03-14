@@ -31,7 +31,8 @@ class GasStationListBuilder extends StatelessWidget {
       builder: (context, AsyncSnapshot<List<GasStationListData>> snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
-            itemCount: 10,
+            itemCount:
+                snapshot.data!.length, //TODO: nice to have handle long list
             itemBuilder: (context, index) {
               return GasStationListRow(
                 name: snapshot.data![index].name,

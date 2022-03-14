@@ -6,8 +6,8 @@ class GasStationListRow extends StatelessWidget {
   final String name;
   final String street;
   final String city;
-  final String logo;
   final int id;
+  final String? logo;
   final String? distance;
 
   const GasStationListRow({
@@ -15,8 +15,8 @@ class GasStationListRow extends StatelessWidget {
     required this.name,
     required this.street,
     required this.city,
-    required this.logo,
     required this.id,
+    this.logo,
     this.distance,
   }) : super(key: key);
 
@@ -35,7 +35,9 @@ class GasStationListRow extends StatelessWidget {
           children: [
             SizedBox(
               width: 50,
-              child: Image.network(logo),
+              child: logo != ''
+                  ? Image.network(logo!)
+                  : const Text('Logo missing'), //TODO: this can be better
             ),
             distance != null ? Text(distance!) : const SizedBox.shrink(),
           ],

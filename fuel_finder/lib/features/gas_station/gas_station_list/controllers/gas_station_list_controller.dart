@@ -14,6 +14,10 @@ class GasStationListController {
 
   Future<void> initGasStationList() async {
     _gasStationList = await GasStationApi().getGasStationList();
+
+    _gasStationList
+        .sort(((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase())));
+
     _getGasStationListStreamController.add(_gasStationList);
   }
 }
