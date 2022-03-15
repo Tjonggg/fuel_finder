@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_finder/features/gas_station/gas_station_details/gas_station_details_screen.dart';
 
 //TODO: nice to have, make theme and replace all const
 
@@ -73,7 +74,9 @@ class GasStationListRow extends StatelessWidget {
             fontSize: 16,
           ),
         ),
-        // onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, GasStationDetailsScreen.id);
+        },
       ),
     );
   }

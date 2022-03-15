@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_finder/features/gas_station/gas_station_details/gas_station_details_screen.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/gas_station_list_screen.dart';
 
 void main() {
@@ -16,6 +17,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       home: const GasStationListScreen(),
+      routes: {
+        GasStationListScreen.id: (context) => const GasStationListScreen(),
+        GasStationDetailsScreen.id: (context) =>
+            const GasStationDetailsScreen(),
+      },
     );
   }
 }

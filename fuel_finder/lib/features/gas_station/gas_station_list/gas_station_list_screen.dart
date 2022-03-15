@@ -4,6 +4,8 @@ import 'package:fuel_finder/features/gas_station/gas_station_list/models/gas_sta
 import 'package:fuel_finder/features/gas_station/gas_station_list/widgets/gas_station_list_row.dart';
 
 class GasStationListScreen extends StatelessWidget {
+  static const String id = 'gas_station_list_screen';
+
   const GasStationListScreen({Key? key}) : super(key: key);
 
   @override
