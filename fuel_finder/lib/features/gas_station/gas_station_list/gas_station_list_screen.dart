@@ -37,6 +37,7 @@ class _GasStationListScreenState extends State<GasStationListScreen>
     if (LocationProvider.positionStream != null) {
       LocationProvider.positionStream!.cancel();
     }
+    //TODO: clear textfield
   }
 
   @override

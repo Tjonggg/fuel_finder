@@ -62,7 +62,7 @@ class GasStationListController {
   }
 
   void onTextFieldChanged(String value) {
-    if (value.isEmpty) {
+    if (value == '') {
       enableLocationRefresh = true;
     } else {
       enableLocationRefresh = false;

@@ -49,9 +49,10 @@ class LocationProvider {
       (position) {
         _distance = Geolocator.distanceBetween(refreshPostion.latitude,
             refreshPostion.longitude, position.latitude, position.longitude);
+        print(_distance);
         if (_distance > _refreshDistance) {
-          refreshPosition = position;
           _refreshPositionStreamController.add(position);
+          refreshPosition = position;
         }
       },
     );
