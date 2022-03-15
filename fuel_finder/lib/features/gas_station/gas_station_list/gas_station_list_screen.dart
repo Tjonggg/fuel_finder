@@ -1,12 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/controllers/gas_station_list_controller.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_list/models/gas_station_list_data.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/widgets/gas_station_list_row.dart';
+import 'package:fuel_finder/features/gas_station/models/gas_station_data.dart';
+import 'package:fuel_finder/main.dart';
+import 'package:fuel_finder/services/location_provider/location_provider.dart';
 
-class GasStationListScreen extends StatelessWidget {
+class GasStationListScreen extends StatefulWidget {
   static const String id = 'gas_station_list_screen';
 
   const GasStationListScreen({Key? key}) : super(key: key);
+
+  @override
+  State<GasStationListScreen> createState() => _GasStationListScreenState();
+}
+
+class _GasStationListScreenState extends State<GasStationListScreen>
+    with RouteAware {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+
+    if (LocationProvider.positionStream != null) {
+      LocationProvider.positionStream!.cancel();
+    }
+  }
+
+  @override
+  void didPushNext() {
+    if (LocationProvider.positionStream != null) {
+      LocationProvider.positionStream!.cancel();
+    }
+  }
+
+  @override
+  void didPopNext() {
+    if (LocationProvider.refreshPosition != null) {
+      LocationProvider().startLocationListener(
+          refreshPostion: LocationProvider.refreshPosition!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,21 +81,14 @@ class GasStationListBuilder extends StatelessWidget {
         Expanded(
           child: StreamBuilder(
             stream: _gasStationListController.getGasStationListStream,
-            builder:
-                (context, AsyncSnapshot<List<GasStationListData>> snapshot) {
+            builder: (context, AsyncSnapshot<List<GasStationData>> snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
                   itemCount: snapshot
                       .data!.length, //TODO: nice to have handle long list
                   itemBuilder: (context, index) {
                     return GasStationListRow(
-                      name: snapshot.data![index].name,
-                      street: snapshot.data![index].street,
-                      city: snapshot.data![index].city,
-                      logo: snapshot.data![index].logo,
-                      id: snapshot.data![index].id,
-                      distance: snapshot.data?[index].distance,
-                    );
+                        gasStationData: snapshot.data![index]);
                   },
                 );
               } else {

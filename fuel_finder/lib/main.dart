@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/gas_station_details_screen.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/gas_station_list_screen.dart';
 
+//TODO: nice to have, make theme and replace all const
 void main() {
   runApp(const MyApp());
 }
+
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -22,6 +25,8 @@ class MyApp extends StatelessWidget {
         GasStationDetailsScreen.id: (context) =>
             const GasStationDetailsScreen(),
       },
+      initialRoute: GasStationListScreen.id,
+      navigatorObservers: [routeObserver],
     );
   }
 }

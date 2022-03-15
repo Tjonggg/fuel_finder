@@ -1,20 +1,20 @@
 import 'dart:async';
 
-import 'package:fuel_finder/features/gas_station/gas_station_list/models/gas_station_list_data.dart';
+import 'package:fuel_finder/features/gas_station/models/gas_station_data.dart';
 import 'package:fuel_finder/services/api_provider/gas_station_api.dart';
 import 'package:fuel_finder/services/location_provider/location_provider.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GasStationListController {
-  List<GasStationListData>? _gasStationList;
-  bool _textFieldEmpty = true;
+  List<GasStationData>? _gasStationList;
+  static bool enableLocationRefresh = true;
 
   final LocationProvider _locationProvider = LocationProvider();
 
-  final StreamController<List<GasStationListData>>
+  final StreamController<List<GasStationData>>
       _getGasStationListStreamController =
-      StreamController<List<GasStationListData>>();
-  Stream<List<GasStationListData>> get getGasStationListStream =>
+      StreamController<List<GasStationData>>();
+  Stream<List<GasStationData>> get getGasStationListStream =>
       _getGasStationListStreamController.stream;
 
   Future<void> initGasStationList() async {
@@ -41,7 +41,7 @@ class GasStationListController {
     _locationProvider.initLocationProvider();
     _locationProvider.refreshPositionStream.listen(
       (position) async {
-        if (_textFieldEmpty) {
+        if (enableLocationRefresh) {
           for (var _gasStationListItem in _gasStationList!) {
             _distance = Geolocator.distanceBetween(
                 position.latitude,
@@ -63,9 +63,9 @@ class GasStationListController {
 
   void onTextFieldChanged(String value) {
     if (value.isEmpty) {
-      _textFieldEmpty = true;
+      enableLocationRefresh = true;
     } else {
-      _textFieldEmpty = false;
+      enableLocationRefresh = false;
       if (_gasStationList != null) {
         _getGasStationListStreamController.add(_gasStationList!.where(
           (string) {

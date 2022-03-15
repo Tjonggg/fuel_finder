@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/gas_station_details_screen.dart';
-
-//TODO: nice to have, make theme and replace all const
+import 'package:fuel_finder/features/gas_station/models/gas_station_data.dart';
 
 class GasStationListRow extends StatelessWidget {
-  final String name;
-  final String street;
-  final String city;
-  final int id;
-  final String? logo;
-  final double? distance;
+  final GasStationData gasStationData;
 
   const GasStationListRow({
     Key? key,
-    required this.name,
-    required this.street,
-    required this.city,
-    required this.id,
-    this.logo,
-    this.distance,
+    required this.gasStationData,
   }) : super(key: key);
 
   @override
@@ -36,13 +25,13 @@ class GasStationListRow extends StatelessWidget {
           children: [
             SizedBox(
               width: 50,
-              child: logo != ''
-                  ? Image.network(logo!)
+              child: gasStationData.logo != ''
+                  ? Image.network(gasStationData.logo)
                   : const Text('Logo missing'), //TODO: this can be better
             ),
-            distance != null
+            gasStationData.distance != null
                 ? Text(
-                    '${distance!.toStringAsFixed(0)} m',
+                    '${gasStationData.distance!.toStringAsFixed(0)} m',
                     style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 10,
@@ -52,7 +41,7 @@ class GasStationListRow extends StatelessWidget {
           ],
         ),
         title: Text(
-          name,
+          gasStationData.name,
           style: const TextStyle(
             color: Colors.redAccent,
             fontWeight: FontWeight.bold,
@@ -60,7 +49,7 @@ class GasStationListRow extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          '$street $city',
+          '${gasStationData.street}, ${gasStationData.city}',
           style: const TextStyle(
             color: Colors.grey,
             fontSize: 10,
@@ -75,7 +64,11 @@ class GasStationListRow extends StatelessWidget {
           ),
         ),
         onTap: () {
-          Navigator.pushNamed(context, GasStationDetailsScreen.id);
+          Navigator.pushNamed(
+            context,
+            GasStationDetailsScreen.id,
+            arguments: gasStationData,
+          );
         },
       ),
     );

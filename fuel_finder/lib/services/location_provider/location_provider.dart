@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 class LocationProvider {
   static const int _refreshDistance = 100;
 
-  Position? _refreshPosition;
+  static Position? refreshPosition;
   Position? _position;
 
   static StreamSubscription<Position>? positionStream;
@@ -32,8 +32,8 @@ class LocationProvider {
       try {
         _position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high);
-        _refreshPosition = _position;
-        startLocationListener(refreshPostion: _refreshPosition!);
+        refreshPosition = _position;
+        startLocationListener(refreshPostion: refreshPosition!);
       } catch (e) {
         throw Exception('Error fetching device current position: $e');
       }
@@ -41,7 +41,7 @@ class LocationProvider {
   }
 
   void startLocationListener({required Position refreshPostion}) {
-    double _distance;
+    double _distance = 0;
 
     positionStream = Geolocator.getPositionStream(
       locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
@@ -50,8 +50,8 @@ class LocationProvider {
         _distance = Geolocator.distanceBetween(refreshPostion.latitude,
             refreshPostion.longitude, position.latitude, position.longitude);
         if (_distance > _refreshDistance) {
+          refreshPosition = position;
           _refreshPositionStreamController.add(position);
-          _refreshPosition = position;
         }
       },
     );
