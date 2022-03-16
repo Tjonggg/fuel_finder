@@ -11,10 +11,8 @@ class LocationProvider {
 
   static StreamSubscription<Position>? positionStream;
 
-  final StreamController<Position> _refreshPositionStreamController =
-      StreamController<Position>();
-  Stream<Position> get refreshPositionStream =>
-      _refreshPositionStreamController.stream;
+  final StreamController<Position> _refreshPositionStreamController = StreamController<Position>();
+  Stream<Position> get refreshPositionStream => _refreshPositionStreamController.stream;
 
   Future<void> initLocationProvider() async {
     final _permission = await Permission.location.status;
@@ -23,15 +21,13 @@ class LocationProvider {
       try {
         await Permission.locationWhenInUse.request();
       } catch (e) {
-        throw Exception(
-            'Something went wrong with device location permission: $e');
+        throw Exception('Something went wrong with device location permission: $e');
       }
     }
 
     if (_permission.isGranted || _permission.isLimited) {
       try {
-        _position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high);
+        _position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
         refreshPosition = _position;
         startLocationListener(refreshPostion: refreshPosition!);
       } catch (e) {
@@ -47,9 +43,7 @@ class LocationProvider {
       locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
     ).listen(
       (position) {
-        _distance = Geolocator.distanceBetween(refreshPostion.latitude,
-            refreshPostion.longitude, position.latitude, position.longitude);
-        print(_distance);
+        _distance = Geolocator.distanceBetween(refreshPostion.latitude, refreshPostion.longitude, position.latitude, position.longitude);
         if (_distance > _refreshDistance) {
           _refreshPositionStreamController.add(position);
           refreshPosition = position;

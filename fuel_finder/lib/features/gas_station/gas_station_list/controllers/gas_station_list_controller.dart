@@ -11,11 +11,8 @@ class GasStationListController {
 
   final LocationProvider _locationProvider = LocationProvider();
 
-  final StreamController<List<GasStationData>>
-      _getGasStationListStreamController =
-      StreamController<List<GasStationData>>();
-  Stream<List<GasStationData>> get getGasStationListStream =>
-      _getGasStationListStreamController.stream;
+  final StreamController<List<GasStationData>> _getGasStationListStreamController = StreamController<List<GasStationData>>();
+  Stream<List<GasStationData>> get getGasStationListStream => _getGasStationListStreamController.stream;
 
   Future<void> initGasStationList() async {
     //TODO: check flow!
@@ -26,8 +23,7 @@ class GasStationListController {
     }
 
     if (_gasStationList != null) {
-      _gasStationList!.sort(
-          ((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase())));
+      _gasStationList!.sort(((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase())));
 
       _getGasStationListStreamController.add(_gasStationList!);
 
@@ -43,11 +39,8 @@ class GasStationListController {
       (position) async {
         if (enableLocationRefresh) {
           for (var _gasStationListItem in _gasStationList!) {
-            _distance = Geolocator.distanceBetween(
-                position.latitude,
-                position.longitude,
-                _gasStationListItem.latitude,
-                _gasStationListItem.longitude);
+            _distance =
+                Geolocator.distanceBetween(position.latitude, position.longitude, _gasStationListItem.latitude, _gasStationListItem.longitude);
 
             _distance = _distance / 10000; //TODO: delete after test!!!
             _gasStationListItem.distance = _distance;

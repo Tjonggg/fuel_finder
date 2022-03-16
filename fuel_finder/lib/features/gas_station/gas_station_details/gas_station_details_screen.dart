@@ -9,8 +9,7 @@ class GasStationDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gasStationData =
-        ModalRoute.of(context)!.settings.arguments as GasStationData;
+    final gasStationData = ModalRoute.of(context)!.settings.arguments as GasStationData;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
@@ -25,7 +24,7 @@ class GasStationDetailsScreen extends StatelessWidget {
                   width: 100,
                   child: gasStationData.logo != ''
                       ? Image.network(gasStationData.logo)
-                      : const Text('Logo missing'), //TODO: this can be better
+                      : const Text('Logo missing'), //TODO: https://pub.dev/packages/cached_network_image
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),
@@ -73,8 +72,7 @@ class GasStationDetailsScreen extends StatelessWidget {
                         SizedBox(
                           height: 30,
                           width: 30,
-                          child: Image.asset('assets/icons/icon_distance.png',
-                              fit: BoxFit.fitHeight),
+                          child: Image.asset('assets/icons/icon_distance.png', fit: BoxFit.fitHeight),
                         ),
                         Container(
                           padding: const EdgeInsets.only(left: 32.0, top: 0),

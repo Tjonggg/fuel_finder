@@ -14,8 +14,7 @@ class GasStationListScreen extends StatefulWidget {
   State<GasStationListScreen> createState() => _GasStationListScreenState();
 }
 
-class _GasStationListScreenState extends State<GasStationListScreen>
-    with RouteAware {
+class _GasStationListScreenState extends State<GasStationListScreen> with RouteAware {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -43,8 +42,7 @@ class _GasStationListScreenState extends State<GasStationListScreen>
   @override
   void didPopNext() {
     if (LocationProvider.refreshPosition != null) {
-      LocationProvider().startLocationListener(
-          refreshPostion: LocationProvider.refreshPosition!);
+      LocationProvider().startLocationListener(refreshPostion: LocationProvider.refreshPosition!);
     }
   }
 
@@ -64,8 +62,7 @@ class GasStationListBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GasStationListController _gasStationListController =
-        GasStationListController();
+    final GasStationListController _gasStationListController = GasStationListController();
 
     _gasStationListController.initGasStationList();
     return Column(
@@ -85,11 +82,9 @@ class GasStationListBuilder extends StatelessWidget {
             builder: (context, AsyncSnapshot<List<GasStationData>> snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
-                  itemCount: snapshot
-                      .data!.length, //TODO: nice to have handle long list
+                  itemCount: snapshot.data!.length, //TODO: nice to have handle long list
                   itemBuilder: (context, index) {
-                    return GasStationListRow(
-                        gasStationData: snapshot.data![index]);
+                    return GasStationListRow(gasStationData: snapshot.data![index]);
                   },
                 );
               } else {

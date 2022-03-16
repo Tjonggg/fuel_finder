@@ -29,16 +29,13 @@ class GasStationData {
 
   factory GasStationData.fromJson(dynamic json) {
     List<dynamic> _productsList = json['producten'] as List<dynamic>;
-    List<GasStationDetailsData> _products =
-        _productsList.map((e) => GasStationDetailsData.fromJson(e)).toList();
+    List<GasStationDetailsData> _products = _productsList.map((e) => GasStationDetailsData.fromJson(e)).toList();
 
     List<dynamic> _paymentsList = json['betalingen'] as List<dynamic>;
-    List<GasStationDetailsData> _payments =
-        _paymentsList.map((e) => GasStationDetailsData.fromJson(e)).toList();
+    List<GasStationDetailsData> _payments = _paymentsList.map((e) => GasStationDetailsData.fromJson(e)).toList();
 
     List<dynamic> _extrasList = json['diversen'] as List<dynamic>;
-    List<GasStationDetailsData> _extras =
-        _extrasList.map((e) => GasStationDetailsData.fromJson(e)).toList();
+    List<GasStationDetailsData> _extras = _extrasList.map((e) => GasStationDetailsData.fromJson(e)).toList();
     return GasStationData(
       name: json['naam'] as String,
       street: json['straat_en_nr'] as String,

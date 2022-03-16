@@ -27,7 +27,7 @@ class GasStationListRow extends StatelessWidget {
               width: 50,
               child: gasStationData.logo != ''
                   ? Image.network(gasStationData.logo)
-                  : const Text('Logo missing'), //TODO: this can be better
+                  : const Text('Logo missing'), //TODO: https://pub.dev/packages/cached_network_image
             ),
             gasStationData.distance != null
                 ? Text(
