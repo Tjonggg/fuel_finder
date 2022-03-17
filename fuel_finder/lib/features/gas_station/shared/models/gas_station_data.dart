@@ -37,6 +37,7 @@ class GasStationData {
 
     List<dynamic> _extrasList = json['diversen'] as List<dynamic>;
     List<GasStationDetailsData> _extras = _extrasList.map((e) => GasStationDetailsData.fromJson(e)).toList();
+
     return GasStationData(
       name: json['naam'] as String,
       street: json['straat_en_nr'] as String,

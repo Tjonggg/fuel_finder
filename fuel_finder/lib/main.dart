@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_finder/constants/app_colors.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/gas_station_details_screen.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/gas_station_list_screen.dart';
 
-//TODO: Screensize assets and battery impact check
+//TODO: Screensize assets (assets provider?) and battery impact check
 //TODO: make theme and replace all const
 //TODO: unit test for search
 //TODO: add Favorite with local storage
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Fuel finder',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: AppColors.coreRed,
       ),
       home: const GasStationListScreen(),
       routes: {

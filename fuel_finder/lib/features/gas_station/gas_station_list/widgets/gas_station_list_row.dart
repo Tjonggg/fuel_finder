@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_finder/constants/app_colors.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/gas_station_details_screen.dart';
 import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
 import 'package:fuel_finder/features/gas_station/shared/widgets/gas_station_logo.dart';
@@ -17,7 +18,7 @@ class GasStationListRow extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Colors.redAccent,
+            color: AppColors.coreRed,
           ),
         ),
       ),
@@ -40,7 +41,7 @@ class GasStationListRow extends StatelessWidget {
                       }
                     }()),
                     style: const TextStyle(
-                      color: Colors.grey,
+                      color: AppColors.coreGrey,
                       fontSize: 10,
                     ),
                   )
@@ -50,7 +51,7 @@ class GasStationListRow extends StatelessWidget {
         title: Text(
           gasStationData.name,
           style: const TextStyle(
-            color: Colors.redAccent,
+            color: AppColors.coreRed,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
@@ -58,14 +59,14 @@ class GasStationListRow extends StatelessWidget {
         subtitle: Text(
           '${gasStationData.street}, ${gasStationData.city}',
           style: const TextStyle(
-            color: Colors.grey,
+            color: AppColors.coreGrey,
             fontSize: 10,
           ),
         ),
         trailing: const Text(
           '>', //TODO: change to something nice
           style: TextStyle(
-            color: Colors.redAccent,
+            color: AppColors.coreRed,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),

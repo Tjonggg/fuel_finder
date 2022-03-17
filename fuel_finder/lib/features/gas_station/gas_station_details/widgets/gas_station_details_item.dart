@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_finder/constants/app_colors.dart';
+import 'package:fuel_finder/constants/app_sizes.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/models/gas_station_details_data.dart';
+import 'package:fuel_finder/features/gas_station/gas_station_details/widgets/gas_station_details_icon.dart';
 
 class GasStationDetailsItem extends StatelessWidget {
   final String icon;
@@ -16,18 +19,13 @@ class GasStationDetailsItem extends StatelessWidget {
     return item.isEmpty
         ? const SizedBox.shrink()
         : Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(AppSizes.paddingMedium),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  //don't forget to replace here
-                  height: 30,
-                  width: 30,
-                  child: Image.asset(icon, fit: BoxFit.fill),
-                ),
+                GasStationDetailsIcon(icon: icon),
                 Container(
-                  padding: const EdgeInsets.only(left: 32.0, top: 0),
+                  padding: const EdgeInsets.only(left: AppSizes.paddingLarge, top: 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -35,7 +33,7 @@ class GasStationDetailsItem extends StatelessWidget {
                         (e) => Text(
                           e.gasStationDetailsItem,
                           style: const TextStyle(
-                            color: Colors.grey,
+                            color: AppColors.coreGrey,
                             fontSize: 18,
                           ),
                         ),

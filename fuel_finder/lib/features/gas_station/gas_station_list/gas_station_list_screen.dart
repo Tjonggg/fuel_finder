@@ -64,17 +64,15 @@ class GasStationListBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final GasStationListController _gasStationListController = GasStationListController();
 
-    _gasStationListController.initGasStationList(); // This should not be in the rebuild
+    _gasStationListController.initGasStationList(); // TODO: STATE This should not be in the rebuild
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(0),
-          child: TextField(
-            textAlign: TextAlign.center,
-            showCursor: false,
-            onChanged: _gasStationListController.onTextFieldChanged,
-            decoration: const InputDecoration(hintText: 'Search'), //TODO: refactor search
-          ),
+        TextField(
+          //TODO: refactor search
+          textAlign: TextAlign.center,
+          showCursor: false,
+          onChanged: _gasStationListController.onTextFieldChanged,
+          decoration: const InputDecoration(hintText: 'Search'),
         ),
         Expanded(
           child: StreamBuilder(
