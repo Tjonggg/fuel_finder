@@ -36,7 +36,6 @@ class _GasStationListScreenState extends State<GasStationListScreen> with RouteA
     if (LocationProvider.positionStream != null) {
       LocationProvider.positionStream!.cancel();
     }
-    //TODO: clear textfield
   }
 
   @override
@@ -64,11 +63,10 @@ class GasStationListBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final GasStationListController _gasStationListController = GasStationListController();
 
-    _gasStationListController.initGasStationList(); // TODO: STATE This should not be in the rebuild
+    _gasStationListController.initGasStationList();
     return Column(
       children: [
         TextField(
-          //TODO: refactor search
           textAlign: TextAlign.center,
           showCursor: false,
           onChanged: _gasStationListController.onTextFieldChanged,

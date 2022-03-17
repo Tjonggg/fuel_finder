@@ -18,7 +18,6 @@ class GasStationDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.coreRed,
-        //TODO: add favorite button
       ),
       body: Padding(
         padding: const EdgeInsets.all(AppSizes.paddingSmall),
@@ -66,7 +65,6 @@ class GasStationDetailsScreen extends StatelessWidget {
               const SizedBox(
                 height: AppSizes.paddingLarge,
               ),
-              //TODO: refactor code below!!!
               gasStationData.distance == null
                   ? const SizedBox.shrink()
                   : Padding(
@@ -78,7 +76,6 @@ class GasStationDetailsScreen extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.only(left: AppSizes.paddingLarge, top: 0),
                             child: Text(
-                              //TODO: don't forget to refactor here
                               (() {
                                 if (gasStationData.distance!.toStringAsFixed(0).length > 2) {
                                   final _temp = gasStationData.distance! / 1000;

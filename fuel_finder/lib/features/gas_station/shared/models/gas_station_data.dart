@@ -1,6 +1,5 @@
 import 'package:fuel_finder/features/gas_station/gas_station_details/models/gas_station_details_data.dart';
 
-//TODO: check how to generated this
 class GasStationData {
   final String name;
   final String street;

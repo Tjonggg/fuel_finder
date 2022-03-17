@@ -6,7 +6,7 @@ import 'package:geolocator/geolocator.dart';
 
 class GasStationListController {
   List<GasStationData>? _gasStationList;
-  static bool enableLocationRefresh = true; //TODO: check static
+  static bool enableLocationRefresh = true;
 
   final LocationProvider _locationProvider = LocationProvider();
 
@@ -14,7 +14,6 @@ class GasStationListController {
   Stream<List<GasStationData>> get getGasStationListStream => _getGasStationListStreamController.stream;
 
   Future<void> initGasStationList() async {
-    //TODO: check flow!
     try {
       _gasStationList = await GasStationApi().getGasStationList();
     } catch (e) {
@@ -54,7 +53,6 @@ class GasStationListController {
   }
 
   void onTextFieldChanged(String value) {
-    //TODO: refactor search to a real search
     if (value == '') {
       enableLocationRefresh = true;
     } else {
@@ -62,8 +60,14 @@ class GasStationListController {
       if (_gasStationList != null) {
         _getGasStationListStreamController.add(_gasStationList!.where(
           (string) {
-            String _tempString = string.name + string.street + string.city; //TODO: put this in a IF loop
-            return _tempString.toLowerCase().contains(value.toLowerCase());
+            if (string.name.toLowerCase().contains(value.toLowerCase())) {
+              return true;
+            } else if (string.street.toLowerCase().contains(value.toLowerCase())) {
+              return true;
+            } else if (string.city.toLowerCase().contains(value.toLowerCase())) {
+              return true;
+            }
+            return false;
           },
         ).toList());
       }

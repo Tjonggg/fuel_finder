@@ -3,11 +3,6 @@ import 'package:fuel_finder/constants/app_colors.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/gas_station_details_screen.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/gas_station_list_screen.dart';
 
-//TODO: Screensize assets (assets provider?) and battery impact check
-//TODO: make theme and replace all const
-//TODO: unit test for search
-//TODO: add Favorite with local storage
-//TODO: State management, state is all over the place
 void main() {
   runApp(const MyApp());
 }

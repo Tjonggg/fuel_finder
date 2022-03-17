@@ -45,7 +45,6 @@ class LocationProvider {
       (position) {
         _distance = Geolocator.distanceBetween(refreshPostion.latitude, refreshPostion.longitude, position.latitude, position.longitude);
         if (_distance > _refreshDistance) {
-          print(_distance); //TODO: + deze refresh zit nog niet ok in elkaar, mag maar 1 keer aangemaakt worden
           _refreshPositionStreamController.add(position);
           refreshPosition = position;
         }

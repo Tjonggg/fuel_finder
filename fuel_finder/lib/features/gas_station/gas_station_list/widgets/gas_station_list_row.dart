@@ -63,13 +63,9 @@ class GasStationListRow extends StatelessWidget {
             fontSize: 10,
           ),
         ),
-        trailing: const Text(
-          '>', //TODO: change to something nice
-          style: TextStyle(
-            color: AppColors.coreRed,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
+        trailing: const Icon(
+          Icons.navigate_next,
+          color: AppColors.coreRed,
         ),
         onTap: () {
           Navigator.pushNamed(
