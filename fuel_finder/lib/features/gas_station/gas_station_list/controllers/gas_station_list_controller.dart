@@ -1,13 +1,12 @@
 import 'dart:async';
-
-import 'package:fuel_finder/features/gas_station/models/gas_station_data.dart';
+import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
 import 'package:fuel_finder/services/api_provider/gas_station_api.dart';
 import 'package:fuel_finder/services/location_provider/location_provider.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GasStationListController {
   List<GasStationData>? _gasStationList;
-  static bool enableLocationRefresh = true;
+  static bool enableLocationRefresh = true; //TODO: check static
 
   final LocationProvider _locationProvider = LocationProvider();
 
@@ -42,7 +41,7 @@ class GasStationListController {
             _distance =
                 Geolocator.distanceBetween(position.latitude, position.longitude, _gasStationListItem.latitude, _gasStationListItem.longitude);
 
-            _distance = _distance / 10000; //TODO: delete after test!!!
+            _distance = _distance;
             _gasStationListItem.distance = _distance;
           }
 
@@ -55,6 +54,7 @@ class GasStationListController {
   }
 
   void onTextFieldChanged(String value) {
+    //TODO: refactor search to a real search
     if (value == '') {
       enableLocationRefresh = true;
     } else {
@@ -62,7 +62,7 @@ class GasStationListController {
       if (_gasStationList != null) {
         _getGasStationListStreamController.add(_gasStationList!.where(
           (string) {
-            String _tempString = string.name + string.street + string.city;
+            String _tempString = string.name + string.street + string.city; //TODO: put this in a IF loop
             return _tempString.toLowerCase().contains(value.toLowerCase());
           },
         ).toList());

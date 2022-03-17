@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/gas_station_details_screen.dart';
-import 'package:fuel_finder/features/gas_station/models/gas_station_data.dart';
+import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
+import 'package:fuel_finder/features/gas_station/shared/widgets/gas_station_logo.dart';
 
 class GasStationListRow extends StatelessWidget {
   final GasStationData gasStationData;
@@ -23,15 +24,21 @@ class GasStationListRow extends StatelessWidget {
       child: ListTile(
         leading: Column(
           children: [
-            SizedBox(
-              width: 50,
-              child: gasStationData.logo != ''
-                  ? Image.network(gasStationData.logo)
-                  : const Text('Logo missing'), //TODO: https://pub.dev/packages/cached_network_image
+            GasStationLogo(
+              logoUrl: gasStationData.logo,
+              logoWidth: 50,
             ),
             gasStationData.distance != null
                 ? Text(
-                    '${gasStationData.distance!.toStringAsFixed(0)} m',
+                    (() {
+                      // remove from UI
+                      if (gasStationData.distance! > 999) {
+                        final _temp = gasStationData.distance! / 1000;
+                        return '${_temp.toStringAsFixed(1)} km';
+                      } else {
+                        return '${gasStationData.distance!.toStringAsFixed(0)} m';
+                      }
+                    }()),
                     style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 10,

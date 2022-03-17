@@ -4,9 +4,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class LocationProvider {
-  static const int _refreshDistance = 100;
+  static const int _refreshDistance = 100; //singleton ipv static
 
-  static Position? refreshPosition;
+  static Position? refreshPosition; //singleton ipv static
   Position? _position;
 
   static StreamSubscription<Position>? positionStream;
@@ -45,6 +45,7 @@ class LocationProvider {
       (position) {
         _distance = Geolocator.distanceBetween(refreshPostion.latitude, refreshPostion.longitude, position.latitude, position.longitude);
         if (_distance > _refreshDistance) {
+          print(_distance); //TODO: + deze refresh zit nog niet ok in elkaar, mag maar 1 keer aangemaakt worden
           _refreshPositionStreamController.add(position);
           refreshPosition = position;
         }

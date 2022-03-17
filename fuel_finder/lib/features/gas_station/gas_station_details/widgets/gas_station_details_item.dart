@@ -21,6 +21,7 @@ class GasStationDetailsItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
+                  //don't forget to replace here
                   height: 30,
                   width: 30,
                   child: Image.asset(icon, fit: BoxFit.fill),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/controllers/gas_station_list_controller.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/widgets/gas_station_list_row.dart';
-import 'package:fuel_finder/features/gas_station/models/gas_station_data.dart';
+import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
 import 'package:fuel_finder/main.dart';
 import 'package:fuel_finder/services/location_provider/location_provider.dart';
 
@@ -64,7 +64,7 @@ class GasStationListBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final GasStationListController _gasStationListController = GasStationListController();
 
-    _gasStationListController.initGasStationList();
+    _gasStationListController.initGasStationList(); // This should not be in the rebuild
     return Column(
       children: [
         Padding(
@@ -73,7 +73,7 @@ class GasStationListBuilder extends StatelessWidget {
             textAlign: TextAlign.center,
             showCursor: false,
             onChanged: _gasStationListController.onTextFieldChanged,
-            decoration: const InputDecoration(hintText: 'Search'),
+            decoration: const InputDecoration(hintText: 'Search'), //TODO: refactor search
           ),
         ),
         Expanded(
@@ -82,7 +82,7 @@ class GasStationListBuilder extends StatelessWidget {
             builder: (context, AsyncSnapshot<List<GasStationData>> snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
-                  itemCount: snapshot.data!.length, //TODO: nice to have handle long list
+                  itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     return GasStationListRow(gasStationData: snapshot.data![index]);
                   },
