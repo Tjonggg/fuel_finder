@@ -4,6 +4,7 @@ import 'package:fuel_finder/constants/app_sizes.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/widgets/gas_station_details_icon.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/widgets/gas_station_details_item.dart';
 import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
+import 'package:fuel_finder/features/gas_station/shared/widgets/gas_station_appbar_favorites.dart';
 import 'package:fuel_finder/features/gas_station/shared/widgets/gas_station_logo.dart';
 
 class GasStationDetailsScreen extends StatelessWidget {
@@ -13,11 +14,16 @@ class GasStationDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gasStationData = ModalRoute.of(context)!.settings.arguments as GasStationData;
+    final _gasStationData = ModalRoute.of(context)!.settings.arguments as GasStationData;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.coreRed,
+        actions: [
+          GasStationAppbarFavorites(
+            gasStationId: _gasStationData.id,
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(AppSizes.paddingSmall),
@@ -27,7 +33,7 @@ class GasStationDetailsScreen extends StatelessWidget {
               Row(
                 children: [
                   GasStationLogo(
-                    logoUrl: gasStationData.logo,
+                    logoUrl: _gasStationData.logo,
                     logoWidth: 100,
                   ),
                   Padding(
@@ -36,7 +42,7 @@ class GasStationDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          gasStationData.name,
+                          _gasStationData.name,
                           style: const TextStyle(
                             color: AppColors.coreRed,
                             fontWeight: FontWeight.bold,
@@ -44,14 +50,14 @@ class GasStationDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          gasStationData.street,
+                          _gasStationData.street,
                           style: const TextStyle(
                             color: AppColors.coreGrey,
                             fontSize: 10,
                           ),
                         ),
                         Text(
-                          gasStationData.city,
+                          _gasStationData.city,
                           style: const TextStyle(
                             color: AppColors.coreGrey,
                             fontSize: 10,
@@ -65,7 +71,7 @@ class GasStationDetailsScreen extends StatelessWidget {
               const SizedBox(
                 height: AppSizes.paddingLarge,
               ),
-              gasStationData.distance == null
+              _gasStationData.distance == null
                   ? const SizedBox.shrink()
                   : Padding(
                       padding: const EdgeInsets.all(AppSizes.paddingMedium),
@@ -77,11 +83,11 @@ class GasStationDetailsScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(left: AppSizes.paddingLarge, top: 0),
                             child: Text(
                               (() {
-                                if (gasStationData.distance!.toStringAsFixed(0).length > 2) {
-                                  final _temp = gasStationData.distance! / 1000;
+                                if (_gasStationData.distance!.toStringAsFixed(0).length > 2) {
+                                  final _temp = _gasStationData.distance! / 1000;
                                   return '${_temp.toStringAsFixed(1)} km';
                                 } else {
-                                  return '${gasStationData.distance!.toStringAsFixed(0)} m';
+                                  return '${_gasStationData.distance!.toStringAsFixed(0)} m';
                                 }
                               }()),
                               style: const TextStyle(
@@ -95,15 +101,15 @@ class GasStationDetailsScreen extends StatelessWidget {
                     ),
               GasStationDetailsItem(
                 icon: 'assets/icons/icon_products.png',
-                item: gasStationData.products!,
+                item: _gasStationData.products!,
               ),
               GasStationDetailsItem(
                 icon: 'assets/icons/icon_payments.png',
-                item: gasStationData.payments!,
+                item: _gasStationData.payments!,
               ),
               GasStationDetailsItem(
                 icon: 'assets/icons/icon_extras.png',
-                item: gasStationData.extras!,
+                item: _gasStationData.extras!,
               ),
             ],
           ),
