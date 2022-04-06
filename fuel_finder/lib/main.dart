@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:fuel_finder/constants/app_colors.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/gas_station_details_screen.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/gas_station_list_screen.dart';
+import 'package:fuel_finder/features/gas_station/shared/controllers/gas_station_favorites_manager.dart';
+import 'package:fuel_finder/services/storage_provider/storage_provider.dart';
+import 'package:get_it/get_it.dart';
 
+final getIt = GetIt.instance;
 void main() {
+  getIt.registerLazySingleton<GasStationFavoriteManager>(() => GasStationFavoriteManager());
+  getIt.registerLazySingleton<StorageProvider>(() => StorageProvider());
+
   runApp(const MyApp());
 }
 
