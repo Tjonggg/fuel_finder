@@ -4,9 +4,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class LocationProvider {
-  static const int _refreshDistance = 100; //singleton ipv static
+  static const int _refreshDistance = 100; //TODO: singleton ipv static
 
-  static Position? refreshPosition; //singleton ipv static
+  static Position? refreshPosition; //TODO: singleton ipv static
   Position? _position;
 
   static StreamSubscription<Position>? positionStream;

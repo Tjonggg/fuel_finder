@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/constants/app_sizes.dart';
-import 'package:fuel_finder/features/gas_station/shared/controllers/gas_station_favorites_manager.dart';
-import 'package:fuel_finder/main.dart';
+import 'package:fuel_finder/features/gas_station/gas_station_details/controllers/gas_station_favorite_manager.dart';
 
-class GasStationAppbarFavorites extends StatefulWidget {
+class GasStationAppbarFavoriteToggle extends StatefulWidget {
   final int gasStationId;
 
-  const GasStationAppbarFavorites({
+  const GasStationAppbarFavoriteToggle({
     Key? key,
     required this.gasStationId,
   }) : super(key: key);
 
   @override
-  State<GasStationAppbarFavorites> createState() => _GasStationAppbarFavoritesState();
+  State<GasStationAppbarFavoriteToggle> createState() => _GasStationAppbarFavoriteToggleState();
 }
 
-class _GasStationAppbarFavoritesState extends State<GasStationAppbarFavorites> {
-  final _gasStationFavoriteManager = getIt<GasStationFavoriteManager>();
+class _GasStationAppbarFavoriteToggleState extends State<GasStationAppbarFavoriteToggle> {
+  final _gasStationFavoriteManager = GasStationFavoriteManager();
 
   @override
   void initState() {
@@ -34,7 +33,7 @@ class _GasStationAppbarFavoritesState extends State<GasStationAppbarFavorites> {
           _gasStationFavoriteManager.updateFavoriteStatus(id: widget.gasStationId);
         },
         child: ValueListenableBuilder<bool>(
-          valueListenable: _gasStationFavoriteManager.gasStationFavoritesNotifier,
+          valueListenable: _gasStationFavoriteManager.gasStationFavoriteNotifier,
           builder: (_, isFavorite, __) {
             return Icon(isFavorite ? Icons.favorite_outlined : Icons.favorite_outline);
           },

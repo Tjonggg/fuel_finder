@@ -4,7 +4,7 @@ import 'package:fuel_finder/constants/app_sizes.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/widgets/gas_station_details_icon.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/widgets/gas_station_details_item.dart';
 import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
-import 'package:fuel_finder/features/gas_station/shared/widgets/gas_station_appbar_favorites.dart';
+import 'package:fuel_finder/features/gas_station/gas_station_details/widgets/gas_station_appbar_favorite_toggle.dart';
 import 'package:fuel_finder/features/gas_station/shared/widgets/gas_station_logo.dart';
 
 class GasStationDetailsScreen extends StatelessWidget {
@@ -20,7 +20,7 @@ class GasStationDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.coreRed,
         actions: [
-          GasStationAppbarFavorites(
+          GasStationAppbarFavoriteToggle(
             gasStationId: _gasStationData.id,
           )
         ],
