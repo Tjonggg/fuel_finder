@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
-import 'package:fuel_finder/main.dart';
+import 'package:fuel_finder/injection.dart';
 import 'package:fuel_finder/services/api_provider/gas_station_api.dart';
 import 'package:fuel_finder/services/location_provider/location_provider.dart';
 import 'package:fuel_finder/services/storage_provider/storage_provider.dart';

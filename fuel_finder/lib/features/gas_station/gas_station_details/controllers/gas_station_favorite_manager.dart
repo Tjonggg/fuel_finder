@@ -1,5 +1,5 @@
 import 'package:fuel_finder/features/gas_station/gas_station_details/controllers/gas_station_favorite_notifier.dart';
-import 'package:fuel_finder/main.dart';
+import 'package:fuel_finder/injection.dart';
 import 'package:fuel_finder/services/storage_provider/storage_provider.dart';
 
 class GasStationFavoriteManager {
