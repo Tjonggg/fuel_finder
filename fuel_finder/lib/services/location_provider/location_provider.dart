@@ -51,4 +51,12 @@ class LocationProvider {
       },
     );
   }
+
+  Future<void> requestLocationPermission() async {
+    try {
+      await Permission.locationWhenInUse.request();
+    } catch (e) {
+      throw Exception('Something went wrong with device location permission: $e');
+    }
+  }
 }

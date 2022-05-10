@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/widgets/gas_station_appbar_favorites_list_toggle.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/controllers/gas_station_list_controller.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/widgets/gas_station_list_row.dart';
 import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
 import 'package:fuel_finder/main.dart';
+import 'package:fuel_finder/services/location_provider/bloc/location_bloc.dart';
+import 'package:fuel_finder/services/location_provider/bloc/location_event.dart';
+import 'package:fuel_finder/services/location_provider/bloc/location_state.dart';
 import 'package:fuel_finder/services/location_provider/location_provider.dart';
 
 class GasStationListScreen extends StatefulWidget {
@@ -57,7 +61,10 @@ class _GasStationListScreenState extends State<GasStationListScreen> with RouteA
           GasStationAppBarFavoritesListToggle(_gasStationListController),
         ],
       ),
-      body: GasStationListBuilder(_gasStationListController),
+      body: BlocProvider<LocationBloc>(
+        create: (BuildContext context) => LocationBloc(),
+        child: GasStationListBuilder(_gasStationListController),
+      ),
     );
   }
 }
@@ -70,33 +77,43 @@ class GasStationListBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<LocationBloc>().add(const LocationEventInit());
     gasStationListController.initGasStationList();
-    return Column(
-      children: [
-        TextField(
-          textAlign: TextAlign.center,
-          showCursor: false,
-          onChanged: gasStationListController.onTextFieldChanged,
-          decoration: const InputDecoration(hintText: 'Search'),
-        ),
-        Expanded(
-          child: StreamBuilder(
-            stream: gasStationListController.getGasStationListStream,
-            builder: (context, AsyncSnapshot<List<GasStationData>> snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return GasStationListRow(gasStationData: snapshot.data![index]);
-                  },
-                );
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-        ),
-      ],
+    return BlocBuilder<LocationBloc, LocationState>(
+      builder: (BuildContext context, state) {
+        if (state is LocationStateLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is LocationStateNotPermitted) {
+          LocationProvider().requestLocationPermission();
+        } else if (state is LocationStatePermitted) {}
+      },
+      // child: Column(
+      //   children: [
+      //     TextField(
+      //       textAlign: TextAlign.center,
+      //       showCursor: false,
+      //       onChanged: gasStationListController.onTextFieldChanged,
+      //       decoration: const InputDecoration(hintText: 'Search'),
+      //     ),
+      //     Expanded(
+      //       child: StreamBuilder(
+      //         stream: gasStationListController.getGasStationListStream,
+      //         builder: (context, AsyncSnapshot<List<GasStationData>> snapshot) {
+      //           if (snapshot.hasData) {
+      //             return ListView.builder(
+      //               itemCount: snapshot.data!.length,
+      //               itemBuilder: (context, index) {
+      //                 return GasStationListRow(gasStationData: snapshot.data![index]);
+      //               },
+      //             );
+      //           } else {
+      //             return const Center(child: CircularProgressIndicator());
+      //           }
+      //         },
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 }
