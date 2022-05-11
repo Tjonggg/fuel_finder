@@ -45,8 +45,12 @@ class GasStationListController {
             _distance =
                 Geolocator.distanceBetween(position.latitude, position.longitude, _gasStationListItem.latitude, _gasStationListItem.longitude);
 
-            _distance = _distance;
-            _gasStationListItem.distance = _distance;
+            if (_distance > 999) {
+              final _temp = _distance / 1000;
+              _gasStationListItem.distance = '${_temp.toStringAsFixed(1)} km';
+            } else {
+              _gasStationListItem.distance = '${_distance.toStringAsFixed(0)} m';
+            }
           }
 
           _gasStationList!.sort(((a, b) => a.distance!.compareTo(b.distance!)));

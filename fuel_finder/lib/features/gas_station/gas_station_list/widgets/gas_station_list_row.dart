@@ -31,15 +31,7 @@ class GasStationListRow extends StatelessWidget {
             ),
             gasStationData.distance != null
                 ? Text(
-                    (() {
-                      // remove from UI
-                      if (gasStationData.distance! > 999) {
-                        final _temp = gasStationData.distance! / 1000;
-                        return '${_temp.toStringAsFixed(1)} km';
-                      } else {
-                        return '${gasStationData.distance!.toStringAsFixed(0)} m';
-                      }
-                    }()),
+                    gasStationData.distance!,
                     style: const TextStyle(
                       color: AppColors.coreGrey,
                       fontSize: 10,

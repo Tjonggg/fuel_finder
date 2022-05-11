@@ -8,7 +8,7 @@ class GasStationData {
   final double latitude;
   final double longitude;
   final int id;
-  double? distance;
+  String? distance;
   List<GasStationDetailsData>? products;
   List<GasStationDetailsData>? payments;
   List<GasStationDetailsData>? extras;

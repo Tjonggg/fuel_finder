@@ -82,14 +82,7 @@ class GasStationDetailsScreen extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.only(left: AppSizes.paddingLarge, top: 0),
                             child: Text(
-                              (() {
-                                if (_gasStationData.distance!.toStringAsFixed(0).length > 2) {
-                                  final _temp = _gasStationData.distance! / 1000;
-                                  return '${_temp.toStringAsFixed(1)} km';
-                                } else {
-                                  return '${_gasStationData.distance!.toStringAsFixed(0)} m';
-                                }
-                              }()),
+                              _gasStationData.distance!,
                               style: const TextStyle(
                                 color: AppColors.coreGrey,
                                 fontSize: 18,
