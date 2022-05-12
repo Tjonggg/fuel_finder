@@ -13,8 +13,6 @@ class GasStationListController {
   bool enableLocationRefresh = true;
   final ValueNotifier<bool> showFavoritesList = ValueNotifier<bool>(false);
 
-  final LocationProvider _locationProvider = LocationProvider();
-
   final StreamController<List<GasStationData>> _getGasStationListStreamController = StreamController<List<GasStationData>>.broadcast();
   Stream<List<GasStationData>> get getGasStationListStream => _getGasStationListStreamController.stream;
 
@@ -37,8 +35,8 @@ class GasStationListController {
   void _refreshGasStationList() {
     double _distance;
 
-    _locationProvider.initLocationProvider();
-    _locationProvider.refreshPositionStream.listen(
+    LocationProvider().initLocationProvider();
+    LocationProvider().refreshPositionStream.listen(
       (position) async {
         if (enableLocationRefresh) {
           for (var _gasStationListItem in _gasStationList!) {

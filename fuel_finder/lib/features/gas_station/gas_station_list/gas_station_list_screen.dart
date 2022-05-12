@@ -28,22 +28,22 @@ class _GasStationListScreenState extends State<GasStationListScreen> with RouteA
     routeObserver.unsubscribe(this);
     super.dispose();
 
-    if (LocationProvider.positionStream != null) {
-      LocationProvider.positionStream!.cancel();
+    if (LocationProvider().positionStream != null) {
+      LocationProvider().positionStream!.cancel();
     }
   }
 
   @override
   void didPushNext() {
-    if (LocationProvider.positionStream != null) {
-      LocationProvider.positionStream!.cancel();
+    if (LocationProvider().positionStream != null) {
+      LocationProvider().positionStream!.cancel();
     }
   }
 
   @override
   void didPopNext() {
-    if (LocationProvider.refreshPosition != null) {
-      LocationProvider().startLocationListener(refreshPostion: LocationProvider.refreshPosition!);
+    if (LocationProvider().refreshPosition != null) {
+      LocationProvider().startLocationListener(refreshPostion: LocationProvider().refreshPosition!);
     }
   }
 

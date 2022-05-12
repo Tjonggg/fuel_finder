@@ -4,12 +4,16 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class LocationProvider {
-  static const int _refreshDistance = 100; //TODO: singleton ipv static
+  static const int _refreshDistance = 100;
 
-  static Position? refreshPosition; //TODO: singleton ipv static
-  Position? _position;
+  static final LocationProvider _locationProvider = LocationProvider._internal();
+  factory LocationProvider() => _locationProvider;
+  LocationProvider._internal();
 
-  static StreamSubscription<Position>? positionStream;
+  late Position? refreshPosition;
+  late Position? _position;
+
+  late StreamSubscription<Position>? positionStream;
 
   final StreamController<Position> _refreshPositionStreamController = StreamController<Position>();
   Stream<Position> get refreshPositionStream => _refreshPositionStreamController.stream;
