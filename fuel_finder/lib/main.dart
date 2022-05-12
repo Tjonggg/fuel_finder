@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/constants/app_colors.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_details/gas_station_details_screen.dart';
+import 'package:fuel_finder/features/gas_station/gas_station_list/gas_station_list_provider.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/gas_station_list_screen.dart';
 import 'package:fuel_finder/injection.dart';
 
@@ -22,9 +23,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: AppColors.coreRed,
       ),
-      home: const GasStationListScreen(),
+      home: const GasStationListProvider(),
       routes: {
-        GasStationListScreen.id: (context) => const GasStationListScreen(),
+        GasStationListScreen.id: (context) => const GasStationListProvider(),
         GasStationDetailsScreen.id: (context) => const GasStationDetailsScreen(),
       },
       initialRoute: GasStationListScreen.id,

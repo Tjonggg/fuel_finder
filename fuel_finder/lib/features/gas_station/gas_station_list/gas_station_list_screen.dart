@@ -5,6 +5,7 @@ import 'package:fuel_finder/features/gas_station/gas_station_list/widgets/gas_st
 import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
 import 'package:fuel_finder/main.dart';
 import 'package:fuel_finder/services/location_provider/location_provider.dart';
+import 'package:provider/provider.dart';
 
 class GasStationListScreen extends StatefulWidget {
   static const String id = 'gas_station_list_screen';
@@ -48,40 +49,36 @@ class _GasStationListScreenState extends State<GasStationListScreen> with RouteA
 
   @override
   Widget build(BuildContext context) {
-    final GasStationListController _gasStationListController = GasStationListController();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Fuel Finder'),
-        actions: [
-          GasStationAppBarFavoritesListToggle(_gasStationListController),
+        actions: const [
+          GasStationAppBarFavoritesListToggle(),
         ],
       ),
-      body: GasStationListBuilder(_gasStationListController),
+      body: const GasStationListBuilder(),
     );
   }
 }
 
 class GasStationListBuilder extends StatelessWidget {
-  final GasStationListController gasStationListController;
-
-  // ignore: use_key_in_widget_constructors
-  const GasStationListBuilder(this.gasStationListController);
+  const GasStationListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    gasStationListController.initGasStationList();
+    final _gasStationListProvider = Provider.of<GasStationListController>(context);
+    _gasStationListProvider.initGasStationList();
     return Column(
       children: [
         TextField(
           textAlign: TextAlign.center,
           showCursor: false,
-          onChanged: gasStationListController.onTextFieldChanged,
+          onChanged: _gasStationListProvider.onTextFieldChanged,
           decoration: const InputDecoration(hintText: 'Search'),
         ),
         Expanded(
           child: StreamBuilder(
-            stream: gasStationListController.getGasStationListStream,
+            stream: _gasStationListProvider.getGasStationListStream,
             builder: (context, AsyncSnapshot<List<GasStationData>> snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(

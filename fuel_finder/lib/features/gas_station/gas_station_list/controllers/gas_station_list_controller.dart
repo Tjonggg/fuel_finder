@@ -10,7 +10,7 @@ import 'package:geolocator/geolocator.dart';
 class GasStationListController {
   //TODO add dispose of all the streams
   List<GasStationData>? _gasStationList;
-  static bool enableLocationRefresh = true;
+  bool enableLocationRefresh = true;
   final ValueNotifier<bool> showFavoritesList = ValueNotifier<bool>(false);
 
   final LocationProvider _locationProvider = LocationProvider();

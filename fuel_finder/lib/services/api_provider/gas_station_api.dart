@@ -7,7 +7,7 @@ class GasStationApi {
   static const String _unencodedPath = '/stations.json';
 
   Future<List<GasStationData>> getGasStationList() async {
-    final _uri = Uri.https(_authority, _unencodedPath);
+    final _uri = Uri.http(_authority, _unencodedPath);
     final _response = await http.get(_uri);
 
     if (_response.statusCode == 200) {

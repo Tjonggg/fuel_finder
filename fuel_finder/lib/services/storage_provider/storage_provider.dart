@@ -1,9 +1,9 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageProvider {
-  //TODO: _favoritesList, _storageList OK?
   static const _favoritesListKey = 'favorites';
 
+  //TODO: _favoritesList, _storageList OK?
   Future<bool> isFavorite({required int id}) async {
     final List<String> _favoritesList = await getFavoritesList();
 
