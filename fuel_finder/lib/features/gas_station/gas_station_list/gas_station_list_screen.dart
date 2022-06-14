@@ -3,8 +3,8 @@ import 'package:fuel_finder/features/gas_station/gas_station_list/widgets/gas_st
 import 'package:fuel_finder/features/gas_station/gas_station_list/controllers/gas_station_list_controller.dart';
 import 'package:fuel_finder/features/gas_station/gas_station_list/widgets/gas_station_list_row.dart';
 import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
-import 'package:fuel_finder/main.dart';
 import 'package:fuel_finder/services/location_provider/location_provider.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class GasStationListScreen extends StatefulWidget {
@@ -66,7 +66,7 @@ class GasStationListBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _gasStationListProvider = Provider.of<GasStationListController>(context);
+    final _gasStationListProvider = GetIt.instance.get<GasStationListController>(); // Provider.of<GasStationListController>(context);
     _gasStationListProvider.initGasStationList();
     return Column(
       children: [

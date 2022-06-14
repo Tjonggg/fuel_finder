@@ -8,6 +8,11 @@ import 'package:fuel_finder/services/storage_provider/storage_provider.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GasStationListController {
+
+  final GasStationApi gasStationApi;
+
+  GasStationListController(this.gasStationApi);
+
   //TODO add dispose of all the streams
   List<GasStationData>? _gasStationList;
   bool enableLocationRefresh = true;
@@ -18,7 +23,7 @@ class GasStationListController {
 
   Future<void> initGasStationList() async {
     try {
-      _gasStationList = await GasStationApi().getGasStationList();
+      _gasStationList = await gasStationApi.getGasStationList();
     } catch (e) {
       throw Exception("Couldn't fetch gas station list: $e");
     }
@@ -87,7 +92,7 @@ class GasStationListController {
 
     if (_gasStationList == null) {
       try {
-        _gasStationList = await GasStationApi().getGasStationList();
+        _gasStationList = await gasStationApi.getGasStationList();
       } catch (e) {
         throw Exception("Couldn't fetch gas station list: $e");
       }
