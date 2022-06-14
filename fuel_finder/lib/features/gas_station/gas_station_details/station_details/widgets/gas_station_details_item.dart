@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/constants/app_colors.dart';
 import 'package:fuel_finder/constants/app_sizes.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_details/models/gas_station_details_data.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_details/widgets/gas_station_details_icon.dart';
+import 'package:fuel_finder/models/models.dart';
+
+import 'gas_station_details_icon.dart';
 
 class GasStationDetailsItem extends StatelessWidget {
   final String icon;
