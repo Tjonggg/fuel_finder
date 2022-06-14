@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:fuel_finder/services/api_provider/gas_station_api.dart';
-import 'package:fuel_finder/shared/models/gas_station_data.dart';
+import 'package:fuel_finder/services/api_provider/api_provider.dart';
+import 'package:fuel_finder/shared/models/models.dart';
 
 class SearchBloc extends Bloc<SearchBlocEvent, List<GasStationData>> {
-  final GasStationApi _gasStationApi; 
+  final GasStationApi _gasStationApi;
   SearchBloc(this._gasStationApi) : super([]);
 
   void onTextFieldChanged(String input) {

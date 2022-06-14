@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/di/injection.dart';
 import 'package:fuel_finder/services/api_provider/gas_station_api.dart';
-import 'package:fuel_finder/services/location_provider/location_provider.dart';
-import 'package:fuel_finder/services/storage_provider/storage_provider.dart';
+import 'package:fuel_finder/services/location_provider/location_manager.dart';
+import 'package:fuel_finder/services/storage_provider/storage_manager.dart';
 import 'package:fuel_finder/shared/models/gas_station_data.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -35,8 +35,8 @@ class GasStationListController {
   void _refreshGasStationList() {
     double _distance;
 
-    LocationProvider().initLocationProvider();
-    LocationProvider().refreshPositionStream.listen(
+    LocationManager().initLocationProvider();
+    LocationManager().refreshPositionStream.listen(
       (position) async {
         if (enableLocationRefresh) {
           for (var _gasStationListItem in _gasStationList!) {
@@ -60,7 +60,7 @@ class GasStationListController {
   }
 
   Future<void> toggleFavoriteList() async {
-    final _storageProvider = getIt<StorageProvider>();
+    final _storageProvider = getIt<StorageManager>();
     final _favoritesList = await _storageProvider.getFavoritesList();
 
     if (_gasStationList == null) {

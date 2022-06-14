@@ -1,4 +1,4 @@
-import 'package:fuel_finder/features/gas_station_details/models/gas_station_details_data.dart';
+import 'gas_station_details_data.dart';
 
 class GasStationData {
   final String name;

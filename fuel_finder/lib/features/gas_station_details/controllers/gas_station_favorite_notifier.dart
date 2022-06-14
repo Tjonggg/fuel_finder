@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/di/injection.dart';
-import 'package:fuel_finder/services/storage_provider/storage_provider.dart';
+import 'package:fuel_finder/services/storage_provider/storage_manager.dart';
 
 class GasStationFavoriteNotifier extends ValueNotifier<bool> {
-  final _storageProvider = getIt<StorageProvider>();
+  final _storageProvider = getIt<StorageManager>();
 
   GasStationFavoriteNotifier() : super(false);
 

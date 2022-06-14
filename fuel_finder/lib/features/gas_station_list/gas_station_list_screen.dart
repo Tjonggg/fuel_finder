@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fuel_finder/app.dart';
 import 'package:fuel_finder/features/gas_station_list/controllers/gas_station_list_controller.dart';
 import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_appbar_favorites_list_toggle.dart';
 import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_list_row.dart';
 import 'package:fuel_finder/features/gas_station_search/gas_station_search.dart';
-import 'package:fuel_finder/main.dart';
-import 'package:fuel_finder/services/location_provider/location_provider.dart';
+import 'package:fuel_finder/services/location_provider/location_manager.dart';
 import 'package:fuel_finder/shared/models/gas_station_data.dart';
 import 'package:provider/provider.dart';
 
@@ -30,22 +30,22 @@ class _GasStationListScreenState extends State<GasStationListScreen> with RouteA
     routeObserver.unsubscribe(this);
     super.dispose();
 
-    if (LocationProvider().positionStream != null) {
-      LocationProvider().positionStream!.cancel();
+    if (LocationManager().positionStream != null) {
+      LocationManager().positionStream!.cancel();
     }
   }
 
   @override
   void didPushNext() {
-    if (LocationProvider().positionStream != null) {
-      LocationProvider().positionStream!.cancel();
+    if (LocationManager().positionStream != null) {
+      LocationManager().positionStream!.cancel();
     }
   }
 
   @override
   void didPopNext() {
-    if (LocationProvider().refreshPosition != null) {
-      LocationProvider().startLocationListener(refreshPostion: LocationProvider().refreshPosition!);
+    if (LocationManager().refreshPosition != null) {
+      LocationManager().startLocationListener(refreshPostion: LocationManager().refreshPosition!);
     }
   }
 
@@ -93,21 +93,6 @@ class GasStationListBuilder extends StatelessWidget {
               }
             },
           ),
-          // child: StreamBuilder(
-          //   stream: _gasStationListProvider.getGasStationListStream,
-          //   builder: (context, AsyncSnapshot<List<GasStationData>> snapshot) {
-          //     if (snapshot.hasData) {
-          //       return ListView.builder(
-          //         itemCount: snapshot.data!.length,
-          //         itemBuilder: (context, index) {
-          //           return GasStationListRow(gasStationData: snapshot.data![index]);
-          //         },
-          //       );
-          //     } else {
-          //       return const Center(child: CircularProgressIndicator());
-          //     }
-          //   },
-          // ),
         ),
       ],
     );
