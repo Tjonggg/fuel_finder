@@ -1,7 +1,9 @@
 import 'dart:convert' as convert;
-import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
+import 'package:fuel_finder/shared/models/gas_station_data.dart';
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
+@injectable
 class GasStationApi {
   static const String _authority = 'fuelfinder-copy.herokuapp.com';
   static const String _unencodedPath = '/stations.json';

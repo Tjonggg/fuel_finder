@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_list/widgets/gas_station_appbar_favorites_list_toggle.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_list/controllers/gas_station_list_controller.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_list/widgets/gas_station_list_row.dart';
-import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fuel_finder/features/gas_station_list/controllers/gas_station_list_controller.dart';
+import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_appbar_favorites_list_toggle.dart';
+import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_list_row.dart';
+import 'package:fuel_finder/features/gas_station_search/gas_station_search.dart';
 import 'package:fuel_finder/main.dart';
 import 'package:fuel_finder/services/location_provider/location_provider.dart';
+import 'package:fuel_finder/shared/models/gas_station_data.dart';
 import 'package:provider/provider.dart';
 
 class GasStationListScreen extends StatefulWidget {
@@ -73,25 +75,39 @@ class GasStationListBuilder extends StatelessWidget {
         TextField(
           textAlign: TextAlign.center,
           showCursor: false,
-          onChanged: _gasStationListProvider.onTextFieldChanged,
+          onChanged: Provider.of<SearchBloc>(context).onTextFieldChanged,
           decoration: const InputDecoration(hintText: 'Search'),
         ),
         Expanded(
-          child: StreamBuilder(
-            stream: _gasStationListProvider.getGasStationListStream,
-            builder: (context, AsyncSnapshot<List<GasStationData>> snapshot) {
-              if (snapshot.hasData) {
+          child: BlocBuilder<SearchBloc, List<GasStationData>>(
+            builder: (context, gasStationList) {
+              if (gasStationList.isEmpty) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
                 return ListView.builder(
-                  itemCount: snapshot.data!.length,
+                  itemCount: gasStationList.length,
                   itemBuilder: (context, index) {
-                    return GasStationListRow(gasStationData: snapshot.data![index]);
+                    return GasStationListRow(gasStationData: gasStationList[index]);
                   },
                 );
-              } else {
-                return const Center(child: CircularProgressIndicator());
               }
             },
           ),
+          // child: StreamBuilder(
+          //   stream: _gasStationListProvider.getGasStationListStream,
+          //   builder: (context, AsyncSnapshot<List<GasStationData>> snapshot) {
+          //     if (snapshot.hasData) {
+          //       return ListView.builder(
+          //         itemCount: snapshot.data!.length,
+          //         itemBuilder: (context, index) {
+          //           return GasStationListRow(gasStationData: snapshot.data![index]);
+          //         },
+          //       );
+          //     } else {
+          //       return const Center(child: CircularProgressIndicator());
+          //     }
+          //   },
+          // ),
         ),
       ],
     );

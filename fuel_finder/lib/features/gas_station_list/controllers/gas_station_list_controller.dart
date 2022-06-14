@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
-import 'package:fuel_finder/injection.dart';
+import 'package:fuel_finder/di/injection.dart';
 import 'package:fuel_finder/services/api_provider/gas_station_api.dart';
 import 'package:fuel_finder/services/location_provider/location_provider.dart';
 import 'package:fuel_finder/services/storage_provider/storage_provider.dart';
+import 'package:fuel_finder/shared/models/gas_station_data.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GasStationListController {
@@ -57,28 +57,6 @@ class GasStationListController {
         }
       },
     );
-  }
-
-  void onTextFieldChanged(String value) {
-    if (value == '') {
-      enableLocationRefresh = true;
-    } else {
-      enableLocationRefresh = false;
-      if (_gasStationList != null) {
-        _getGasStationListStreamController.add(_gasStationList!.where(
-          (string) {
-            if (string.name.toLowerCase().contains(value.toLowerCase())) {
-              return true;
-            } else if (string.street.toLowerCase().contains(value.toLowerCase())) {
-              return true;
-            } else if (string.city.toLowerCase().contains(value.toLowerCase())) {
-              return true;
-            }
-            return false;
-          },
-        ).toList());
-      }
-    }
   }
 
   Future<void> toggleFavoriteList() async {

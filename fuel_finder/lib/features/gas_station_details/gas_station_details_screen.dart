@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/constants/app_colors.dart';
 import 'package:fuel_finder/constants/app_sizes.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_details/widgets/gas_station_details_icon.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_details/widgets/gas_station_details_item.dart';
-import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_details/widgets/gas_station_appbar_favorite_toggle.dart';
-import 'package:fuel_finder/features/gas_station/shared/widgets/gas_station_logo.dart';
+import 'package:fuel_finder/features/gas_station_details/widgets/gas_station_appbar_favorite_toggle.dart';
+import 'package:fuel_finder/features/gas_station_details/widgets/gas_station_details_icon.dart';
+import 'package:fuel_finder/features/gas_station_details/widgets/gas_station_details_item.dart';
+import 'package:fuel_finder/shared/models/gas_station_data.dart';
+import 'package:fuel_finder/shared/widgets/gas_station_logo.dart';
+
 
 class GasStationDetailsScreen extends StatelessWidget {
   static const String id = 'gas_station_details_screen';

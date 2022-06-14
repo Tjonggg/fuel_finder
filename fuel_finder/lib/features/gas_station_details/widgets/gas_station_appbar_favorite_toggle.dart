@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/constants/app_sizes.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_details/controllers/gas_station_favorite_manager.dart';
+import 'package:fuel_finder/features/gas_station_details/controllers/gas_station_favorite_manager.dart';
 
 class GasStationAppbarFavoriteToggle extends StatefulWidget {
   final int gasStationId;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/constants/app_colors.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_details/gas_station_details_screen.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_list/gas_station_list_provider.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_list/gas_station_list_screen.dart';
-import 'package:fuel_finder/injection.dart';
+import 'package:fuel_finder/di/injection.dart';
+import 'package:fuel_finder/features/gas_station_details/gas_station_details_screen.dart';
+import 'package:fuel_finder/features/gas_station_list/locator.dart';
+import 'package:fuel_finder/features/gas_station_list/gas_station_list_screen.dart';
 
 void main() {
   configureDependencies();
@@ -23,9 +23,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: AppColors.coreRed,
       ),
-      home: const GasStationListProvider(),
+      home: const Locator(),
       routes: {
-        GasStationListScreen.id: (context) => const GasStationListProvider(),
+        GasStationListScreen.id: (context) => const Locator(),
         GasStationDetailsScreen.id: (context) => const GasStationDetailsScreen(),
       },
       initialRoute: GasStationListScreen.id,
