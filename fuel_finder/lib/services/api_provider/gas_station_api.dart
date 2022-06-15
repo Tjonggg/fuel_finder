@@ -1,10 +1,14 @@
 import 'dart:convert' as convert;
 import 'package:fuel_finder/shared/models/gas_station_data.dart';
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
+@injectable
 class GasStationApi {
   static const String _authority = 'fuelfinder-copy.herokuapp.com';
   static const String _unencodedPath = '/stations.json';
+
+  const GasStationApi();
 
   Future<List<GasStationData>> getGasStationList() async {
     final _uri = Uri.http(_authority, _unencodedPath);
