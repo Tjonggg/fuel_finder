@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class GasStationLogo extends StatelessWidget {
@@ -20,11 +19,7 @@ class GasStationLogo extends StatelessWidget {
               'No logo',
               textAlign: TextAlign.center,
             )
-          : CachedNetworkImage(
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              imageUrl: logoUrl,
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
+          : Image.network(logoUrl),
     );
   }
 }

@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d145176f-83c4-4107-b37c-36077f918220" name="Changes" comment="Fixed conflicts from merge of 'main' branch">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fuel_finder/lib/features/api/api.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fuel_finder/lib/shared/locator.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fuel_finder/lib/ui/app.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fuel_finder/lib/ui/ui.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fuel_finder/lib/features/gas_station_details/controllers/gas_station_favorite_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/fuel_finder/lib/features/gas_station_details/controllers/gas_station_favorite_manager.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fuel_finder/lib/features/gas_station_details/gas_station_details_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/fuel_finder/lib/features/gas_station_details/gas_station_details_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fuel_finder/lib/features/gas_station_details/widgets/gas_station_appbar_favorite_toggle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/fuel_finder/lib/features/gas_station_details/widgets/gas_station_appbar_favorite_toggle.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fuel_finder/lib/features/gas_station_list/controllers/gas_station_list_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/fuel_finder/lib/features/gas_station_list/controllers/gas_station_list_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fuel_finder/lib/injection.config.dart" beforeDir="false" afterPath="$PROJECT_DIR$/fuel_finder/lib/injection.config.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fuel_finder/lib/services/api_provider/gas_station_api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/fuel_finder/lib/services/api_provider/gas_station_api.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fuel_finder/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/fuel_finder/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fuel_finder/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/fuel_finder/windows/flutter/generated_plugins.cmake" afterDir="false" />
-    </list>
+    <list default="true" id="d145176f-83c4-4107-b37c-36077f918220" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

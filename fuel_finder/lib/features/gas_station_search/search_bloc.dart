@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:fuel_finder/services/api_provider/api_provider.dart';
 import 'package:fuel_finder/shared/models/models.dart';
 
 class SearchBloc extends Bloc<SearchBlocEvent, List<GasStationData>> {
-  final GasStationApi _gasStationApi;
-  SearchBloc(this._gasStationApi) : super([]) {
+  final GasStationApi _gasStationApi = GasStationApi(); //TODO inject this API
+  SearchBloc() : super([]) {
     add(const SearchEmpty());
   }
 
@@ -53,5 +56,6 @@ class SearchTyping extends SearchBlocEvent {
 
 class SearchInput extends SearchBlocEvent {
   final String input;
+
   const SearchInput(this.input);
 }
