@@ -5,28 +5,30 @@ import 'package:rxdart/rxdart.dart';
 import 'package:fuel_finder/services/api_provider/api_provider.dart';
 import 'package:fuel_finder/shared/models/models.dart';
 
-class SearchBloc extends Bloc<SearchBlocEvent, List<GasStationData>> {
-  final GasStationApi _gasStationApi = GasStationApi(); //TODO inject this API
-  SearchBloc() : super([]) {
-    add(const SearchEmpty());
+class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
+  final _gasStationApi = const GasStationApi(); //TODO inject this API
+  final _customDelayStream = BehaviorSubject<String>();
+
+  SearchBloc() : super(SearchBlocState(filteredList: [], fullList: [])) {
+    add(const SearchInitEvent());
   }
 
   void onTextFieldChanged(String input) {
     if (input.isNotEmpty) {
-      add(SearchInput(input));
+      print("TJONG before debounce $input");
+      _customDelayStream.add(input);
     } else {
-      add(const SearchEmpty());
+      add(const SearchEmptyEvent());
     }
   }
 
   @override
-  Stream<List<GasStationData>> mapEventToState(SearchBlocEvent event) async* {
-    final _gasStationList = await _gasStationApi.getGasStationList();
-    if (event is SearchEmpty) {
-      yield _gasStationList;
+  Stream<SearchBlocState> mapEventToState(SearchBlocEvent event) async* {
+    if (event is SearchEmptyEvent) {
+      yield SearchBlocState(filteredList: state.fullList, fullList: state.fullList);
     }
-    if (event is SearchInput) {
-      yield _gasStationList.where(
+    if (event is SearchInputEvent) {
+      final filteredList = state.fullList.where(
         (gasStationData) {
           if (gasStationData.name.toLowerCase().contains(event.input.toLowerCase())) {
             return true;
@@ -38,6 +40,17 @@ class SearchBloc extends Bloc<SearchBlocEvent, List<GasStationData>> {
           return false;
         },
       ).toList();
+      yield SearchBlocState(filteredList: filteredList, fullList: state.fullList);
+    }
+    if (event is SearchInitEvent) {
+      _customDelayStream.stream.distinct().debounceTime(const Duration(seconds: 1)).listen(
+        (input) {
+          add(SearchInputEvent(input));
+          print("TJONG after adding event $input");
+        },
+      );
+      final gasStationList = await _gasStationApi.getGasStationList();
+      yield SearchBlocState(filteredList: gasStationList, fullList: gasStationList);
     }
   }
 }
@@ -46,16 +59,30 @@ class SearchBlocEvent {
   const SearchBlocEvent();
 }
 
-class SearchEmpty extends SearchBlocEvent {
-  const SearchEmpty();
+class SearchEmptyEvent extends SearchBlocEvent {
+  const SearchEmptyEvent();
 }
 
-class SearchTyping extends SearchBlocEvent {
-  const SearchTyping(); //TODO: try :)
+class SearchTypingEvent extends SearchBlocEvent {
+  const SearchTypingEvent(); //TODO: try :)
 }
 
-class SearchInput extends SearchBlocEvent {
+class SearchInputEvent extends SearchBlocEvent {
   final String input;
 
-  const SearchInput(this.input);
+  const SearchInputEvent(this.input);
+}
+
+class SearchInitEvent extends SearchBlocEvent {
+  const SearchInitEvent();
+}
+
+class SearchBlocState {
+  final List<GasStationData> filteredList;
+  final List<GasStationData> fullList;
+
+  SearchBlocState({
+    required this.filteredList,
+    required this.fullList,
+  });
 }

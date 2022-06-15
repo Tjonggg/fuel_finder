@@ -78,15 +78,15 @@ class GasStationListBuilder extends StatelessWidget {
           decoration: const InputDecoration(hintText: 'Search'),
         ),
         Expanded(
-          child: BlocBuilder<SearchBloc, List<GasStationData>>(
-            builder: (context, gasStationList) {
-              if (gasStationList.isEmpty) {
+          child: BlocBuilder<SearchBloc, SearchBlocState>(
+            builder: (context, state) {
+              if (state.filteredList.isEmpty) {
                 return const Center(child: CircularProgressIndicator());
               } else {
                 return ListView.builder(
-                  itemCount: gasStationList.length,
+                  itemCount: state.filteredList.length,
                   itemBuilder: (context, index) {
-                    return GasStationListRow(gasStationData: gasStationList[index]);
+                    return GasStationListRow(gasStationData: state.filteredList[index]);
                   },
                 );
               }

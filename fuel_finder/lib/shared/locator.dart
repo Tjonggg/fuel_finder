@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_details/gas_station_details_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../features/gas_station_details/gas_station_details_screen.dart';
