@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/features/gas_station_list/controllers/gas_station_list_controller.dart';
-import 'package:fuel_finder/features/gas_station_list/gas_station_list_screen.dart';
+import 'package:fuel_finder/features/gas_station_list/gas_station_list.dart';
 import 'package:fuel_finder/features/gas_station_search/gas_station_search.dart';
-import 'package:fuel_finder/services/api_provider/gas_station_api.dart';
+import 'package:fuel_finder/services/api_provider/api_provider.dart';
 import 'package:provider/provider.dart';
 
 class Locator extends StatelessWidget {
@@ -19,7 +19,7 @@ class Locator extends StatelessWidget {
           create: (_) => GasStationApi(),
         ),
         Provider<SearchBloc>(
-          create: (context) => SearchBloc(Provider.of(context)),
+          create: (context) => SearchBloc(Provider.of(context, listen: false)),
         ),
       ],
       child: const GasStationListScreen(),

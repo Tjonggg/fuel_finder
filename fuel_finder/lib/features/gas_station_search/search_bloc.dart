@@ -4,7 +4,9 @@ import 'package:fuel_finder/shared/models/models.dart';
 
 class SearchBloc extends Bloc<SearchBlocEvent, List<GasStationData>> {
   final GasStationApi _gasStationApi;
-  SearchBloc(this._gasStationApi) : super([]);
+  SearchBloc(this._gasStationApi) : super([]) {
+    add(const SearchEmpty());
+  }
 
   void onTextFieldChanged(String input) {
     if (input.isNotEmpty) {

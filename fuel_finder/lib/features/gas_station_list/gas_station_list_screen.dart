@@ -68,8 +68,8 @@ class GasStationListBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _gasStationListProvider = Provider.of<GasStationListController>(context);
-    _gasStationListProvider.initGasStationList();
+    // final _gasStationListProvider = Provider.of<GasStationListController>(context);
+    // _gasStationListProvider.initGasStationList();
     return Column(
       children: [
         TextField(
