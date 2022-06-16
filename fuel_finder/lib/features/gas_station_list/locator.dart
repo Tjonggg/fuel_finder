@@ -15,11 +15,8 @@ class Locator extends StatelessWidget {
         Provider<GasStationListController>(
           create: (_) => GasStationListController(),
         ),
-        Provider<GasStationApi>(
-          create: (_) => GasStationApi(),
-        ),
         Provider<SearchBloc>(
-          create: (context) => SearchBloc(Provider.of(context, listen: false)),
+          create: (context) => SearchBloc(),
         ),
       ],
       child: const GasStationListScreen(),

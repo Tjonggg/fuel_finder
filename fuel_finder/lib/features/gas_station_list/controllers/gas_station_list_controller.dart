@@ -9,9 +9,9 @@ import 'package:geolocator/geolocator.dart';
 
 class GasStationListController {
 
-  final GasStationApi gasStationApi;
+  final GasStationApi gasStationApi = GasStationApi();  // TODO inject the API
 
-  GasStationListController(this.gasStationApi);
+  GasStationListController();
 
   //TODO add dispose of all the streams
   List<GasStationData>? _gasStationList;

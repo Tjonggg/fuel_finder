@@ -1,18 +1,19 @@
-import 'package:fuel_finder/features/gas_station/gas_station_details/controllers/gas_station_favorite_notifier.dart';
-import 'package:fuel_finder/services/storage_provider/storage_provider.dart';
+import 'package:fuel_finder/services/storage_provider/storage_manager.dart';
+
+import 'gas_station_favorite_notifier.dart';
 
 class GasStationFavoriteManager {
-  final StorageProvider storageProvider;
+  final StorageManager storageManager;
   final gasStationFavoriteNotifier = GasStationFavoriteNotifier();
 
-  GasStationFavoriteManager(this.storageProvider);
+  GasStationFavoriteManager(this.storageManager);
 
   Future<void> initFavorite({required int id}) async {
-    gasStationFavoriteNotifier.value = await storageProvider.isFavorite(id: id);
+    gasStationFavoriteNotifier.value = await storageManager.isFavorite(id: id);
   }
 
   Future<bool> isFavorite({required int id}) async {
-    return await storageProvider.isFavorite(id: id);
+    return await storageManager.isFavorite(id: id);
   }
 
   void updateFavoriteStatus({required int id}) {
