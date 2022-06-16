@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/di/injection.dart';
+import 'package:fuel_finder/models/models.dart';
 import 'package:fuel_finder/services/api_provider/gas_station_api.dart';
 import 'package:fuel_finder/services/location_provider/location_manager.dart';
 import 'package:fuel_finder/services/storage_provider/storage_manager.dart';
-import 'package:fuel_finder/shared/models/gas_station_data.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GasStationListController {

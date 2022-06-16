@@ -5,7 +5,6 @@ import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_appbar
 import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_list_row.dart';
 import 'package:fuel_finder/features/gas_station_search/gas_station_search.dart';
 import 'package:fuel_finder/services/location_provider/location_manager.dart';
-import 'package:fuel_finder/shared/models/gas_station_data.dart';
 import 'package:provider/provider.dart';
 
 class GasStationListScreen extends StatefulWidget {

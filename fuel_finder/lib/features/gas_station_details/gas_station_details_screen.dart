@@ -4,10 +4,10 @@ import 'package:fuel_finder/constants/app_sizes.dart';
 import 'package:fuel_finder/features/gas_station_details/widgets/gas_station_appbar_favorite_toggle.dart';
 import 'package:fuel_finder/features/gas_station_details/widgets/gas_station_details_icon.dart';
 import 'package:fuel_finder/features/gas_station_details/widgets/gas_station_details_item.dart';
+import 'package:fuel_finder/models/models.dart';
+import 'package:fuel_finder/shared/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../../shared/models/gas_station_data.dart';
-import '../../shared/widgets/gas_station_logo.dart';
 import 'controllers/gas_station_favorite_manager.dart';
 
 class GasStationDetailsScreen extends StatelessWidget {

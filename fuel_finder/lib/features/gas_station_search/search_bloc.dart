@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:fuel_finder/models/models.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:fuel_finder/services/api_provider/api_provider.dart';
-import 'package:fuel_finder/shared/models/models.dart';
 
 class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
-  final _gasStationApi = const GasStationApi(); //TODO inject this API
+  final _gasStationApi = GasStationApi(); //TODO inject this API
   final _customDelayStream = BehaviorSubject<String>();
 
   SearchBloc() : super(SearchBlocState(filteredList: [], fullList: [])) {
