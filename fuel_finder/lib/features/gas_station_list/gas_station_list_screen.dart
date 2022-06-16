@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_list/widgets/gas_station_appbar_favorites_list_toggle.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_list/controllers/gas_station_list_controller.dart';
-import 'package:fuel_finder/features/gas_station/gas_station_list/widgets/gas_station_list_row.dart';
-import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
-import 'package:fuel_finder/main.dart';
-import 'package:fuel_finder/services/location_provider/location_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fuel_finder/app.dart';
+import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_appbar_favorites_list_toggle.dart';
+import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_list_row.dart';
+import 'package:fuel_finder/features/gas_station_search/gas_station_search.dart';
+import 'package:fuel_finder/services/location_provider/location_manager.dart';
 import 'package:provider/provider.dart';
 
 class GasStationListScreen extends StatefulWidget {
@@ -28,22 +28,22 @@ class _GasStationListScreenState extends State<GasStationListScreen> with RouteA
     routeObserver.unsubscribe(this);
     super.dispose();
 
-    if (LocationProvider().positionStream != null) {
-      LocationProvider().positionStream!.cancel();
+    if (LocationManager().positionStream != null) {
+      LocationManager().positionStream!.cancel();
     }
   }
 
   @override
   void didPushNext() {
-    if (LocationProvider().positionStream != null) {
-      LocationProvider().positionStream!.cancel();
+    if (LocationManager().positionStream != null) {
+      LocationManager().positionStream!.cancel();
     }
   }
 
   @override
   void didPopNext() {
-    if (LocationProvider().refreshPosition != null) {
-      LocationProvider().startLocationListener(refreshPostion: LocationProvider().refreshPosition!);
+    if (LocationManager().refreshPosition != null) {
+      LocationManager().startLocationListener(refreshPostion: LocationManager().refreshPosition!);
     }
   }
 
@@ -66,29 +66,28 @@ class GasStationListBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _gasStationListProvider = Provider.of<GasStationListController>(context);
-    _gasStationListProvider.initGasStationList();
+    // final _gasStationListProvider = Provider.of<GasStationListController>(context);
+    // _gasStationListProvider.initGasStationList();
     return Column(
       children: [
         TextField(
           textAlign: TextAlign.center,
           showCursor: false,
-          onChanged: _gasStationListProvider.onTextFieldChanged,
+          onChanged: Provider.of<SearchBloc>(context).onTextFieldChanged,
           decoration: const InputDecoration(hintText: 'Search'),
         ),
         Expanded(
-          child: StreamBuilder(
-            stream: _gasStationListProvider.getGasStationListStream,
-            builder: (context, AsyncSnapshot<List<GasStationData>> snapshot) {
-              if (snapshot.hasData) {
+          child: BlocBuilder<SearchBloc, SearchBlocState>(
+            builder: (context, state) {
+              if (state.filteredList.isEmpty) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
                 return ListView.builder(
-                  itemCount: snapshot.data!.length,
+                  itemCount: state.filteredList.length,
                   itemBuilder: (context, index) {
-                    return GasStationListRow(gasStationData: snapshot.data![index]);
+                    return GasStationListRow(gasStationData: state.filteredList[index]);
                   },
                 );
-              } else {
-                return const Center(child: CircularProgressIndicator());
               }
             },
           ),

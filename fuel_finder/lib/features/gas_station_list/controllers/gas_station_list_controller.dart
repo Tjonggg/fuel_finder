@@ -1,13 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:fuel_finder/features/gas_station/shared/models/gas_station_data.dart';
-import 'package:fuel_finder/injection.dart';
+import 'package:fuel_finder/di/injection.dart';
+import 'package:fuel_finder/models/models.dart';
 import 'package:fuel_finder/services/api_provider/gas_station_api.dart';
-import 'package:fuel_finder/services/location_provider/location_provider.dart';
-import 'package:fuel_finder/services/storage_provider/storage_provider.dart';
+import 'package:fuel_finder/services/location_provider/location_manager.dart';
+import 'package:fuel_finder/services/storage_provider/storage_manager.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GasStationListController {
+
+  final GasStationApi gasStationApi = GasStationApi();  // TODO inject the API
+
+  GasStationListController();
+
   //TODO add dispose of all the streams
   List<GasStationData>? _gasStationList;
   bool enableLocationRefresh = true;
@@ -18,7 +23,7 @@ class GasStationListController {
 
   Future<void> initGasStationList() async {
     try {
-      _gasStationList = await GasStationApi().getGasStationList();
+      _gasStationList = await gasStationApi.getGasStationList();
     } catch (e) {
       throw Exception("Couldn't fetch gas station list: $e");
     }
@@ -35,8 +40,8 @@ class GasStationListController {
   void _refreshGasStationList() {
     double _distance;
 
-    LocationProvider().initLocationProvider();
-    LocationProvider().refreshPositionStream.listen(
+    LocationManager().initLocationProvider();
+    LocationManager().refreshPositionStream.listen(
       (position) async {
         if (enableLocationRefresh) {
           for (var _gasStationListItem in _gasStationList!) {
@@ -59,35 +64,13 @@ class GasStationListController {
     );
   }
 
-  void onTextFieldChanged(String value) {
-    if (value == '') {
-      enableLocationRefresh = true;
-    } else {
-      enableLocationRefresh = false;
-      if (_gasStationList != null) {
-        _getGasStationListStreamController.add(_gasStationList!.where(
-          (string) {
-            if (string.name.toLowerCase().contains(value.toLowerCase())) {
-              return true;
-            } else if (string.street.toLowerCase().contains(value.toLowerCase())) {
-              return true;
-            } else if (string.city.toLowerCase().contains(value.toLowerCase())) {
-              return true;
-            }
-            return false;
-          },
-        ).toList());
-      }
-    }
-  }
-
   Future<void> toggleFavoriteList() async {
-    final _storageProvider = getIt<StorageProvider>();
+    final _storageProvider = getIt<StorageManager>();
     final _favoritesList = await _storageProvider.getFavoritesList();
 
     if (_gasStationList == null) {
       try {
-        _gasStationList = await GasStationApi().getGasStationList();
+        _gasStationList = await gasStationApi.getGasStationList();
       } catch (e) {
         throw Exception("Couldn't fetch gas station list: $e");
       }

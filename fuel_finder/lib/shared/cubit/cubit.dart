@@ -1,33 +1,35 @@
 import 'package:bloc/bloc.dart';
+import 'package:fuel_finder/services/storage_provider/storage_manager.dart';
 
 class FavoriteBloc extends Bloc<FavoriteBlocEvent, bool> {
   final StorageManager storageManager;
+  final int stationId;
 
-  FavoriteBloc(this.storageManager) : super(false) {
-    add(InitEvent());
+  FavoriteBloc(this.storageManager, {required this.stationId}) : super(false) {
+    add(const InitEvent());
   }
 
   void userDidTapFavoriteToggle() {
     final newFavoriteStatus = !state;
     if (newFavoriteStatus == true) {
-      add(UserDidSetThisStationAsFavorite());
+      add(const UserDidSetThisStationAsFavorite());
     } else {
-      add(UserRemovedStationFromHisFavorites());
+      add(const UserRemovedStationFromHisFavorites());
     }
   }
 
   @override
   Stream<bool> mapEventToState(FavoriteBlocEvent event) async* {
     if (event is UserDidSetThisStationAsFavorite) {
-      storageManager.setAsFavorite(stationId);
+      storageManager.updateFavoriteStatus(id: stationId, status: true);
       yield true;
     }
     if (event is UserRemovedStationFromHisFavorites) {
-      storageManager.removeFromFavorites(stationId);
+      storageManager.updateFavoriteStatus(id: stationId, status: false);
       yield false;
     }
     if (event is InitEvent) {
-      final isFavorite = await storageManager.isFavorite(someStationId);
+      final isFavorite = await storageManager.isFavorite(id: stationId);
       yield isFavorite;
     }
   }
@@ -38,15 +40,11 @@ class FavoriteBlocEvent {
 }
 
 class UserDidSetThisStationAsFavorite extends FavoriteBlocEvent {
-  final int stationId;
-
-  const UserDidSetThisStationAsFavorite(this.stationId);
+  const UserDidSetThisStationAsFavorite();
 }
 
 class UserRemovedStationFromHisFavorites extends FavoriteBlocEvent {
-  final int stationId;
-
-  const UserRemovedStationFromHisFavorites(this.stationId);
+  const UserRemovedStationFromHisFavorites();
 }
 
 class InitEvent extends FavoriteBlocEvent {
