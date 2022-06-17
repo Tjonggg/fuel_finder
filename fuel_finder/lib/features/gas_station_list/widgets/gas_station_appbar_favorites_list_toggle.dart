@@ -13,15 +13,15 @@ class GasStationAppBarFavoritesListToggle extends StatelessWidget {
       padding: const EdgeInsets.only(right: AppSizes.appBarIconPadding),
       child: GestureDetector(
         onTap: () {
-          _gasStationListProvider.toggleFavoriteList();
+          //_gasStationListProvider.toggleFavoriteList();
         },
-        child: ValueListenableBuilder(
-          //TODO is there a better way?
-          valueListenable: _gasStationListProvider.showFavoritesList,
-          builder: (_, __, ___) {
-            return Icon(_gasStationListProvider.showFavoritesList.value ? Icons.bookmark : Icons.bookmark_border);
-          },
-        ),
+        // child: ValueListenableBuilder(
+        //   //TODO is there a better way?
+        //   valueListenable: _gasStationListProvider.showFavoritesList,
+        //   builder: (_, __, ___) {
+        //     return Icon(_gasStationListProvider.showFavoritesList.value ? Icons.bookmark : Icons.bookmark_border);
+        //   },
+        // ),
       ),
     );
   }
