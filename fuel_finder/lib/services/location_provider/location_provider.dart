@@ -1,1 +1,1 @@
-export 'location_manager.dart';
+export 'location_bloc.dart';

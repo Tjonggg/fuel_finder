@@ -4,8 +4,7 @@ import 'package:fuel_finder/app.dart';
 import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_appbar_favorites_list_toggle.dart';
 import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_list_row.dart';
 import 'package:fuel_finder/features/gas_station_search/gas_station_search.dart';
-import 'package:fuel_finder/services/location_provider/location_manager.dart';
-import 'package:fuel_finder/shared/models/gas_station_data.dart';
+import 'package:fuel_finder/services/location_provider/location_bloc.dart';
 import 'package:provider/provider.dart';
 
 class GasStationListScreen extends StatefulWidget {
@@ -24,29 +23,29 @@ class _GasStationListScreenState extends State<GasStationListScreen> with RouteA
     routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
   }
 
-  @override
-  void dispose() {
-    routeObserver.unsubscribe(this);
-    super.dispose();
+  // @override
+  // void dispose() {
+  //   routeObserver.unsubscribe(this);
+  //   super.dispose();
 
-    if (LocationManager().positionStream != null) {
-      LocationManager().positionStream!.cancel();
-    }
-  }
+  //   if (LocationProvider().positionStream != null) {
+  //     LocationProvider().positionStream!.cancel();
+  //   }
+  // }
 
-  @override
-  void didPushNext() {
-    if (LocationManager().positionStream != null) {
-      LocationManager().positionStream!.cancel();
-    }
-  }
+  // @override
+  // void didPushNext() {
+  //   if (LocationProvider().positionStream != null) {
+  //     LocationProvider().positionStream!.cancel();
+  //   }
+  // }
 
-  @override
-  void didPopNext() {
-    if (LocationManager().refreshPosition != null) {
-      LocationManager().startLocationListener(refreshPostion: LocationManager().refreshPosition!);
-    }
-  }
+  // @override
+  // void didPopNext() {
+  //   if (LocationProvider().refreshPosition != null) {
+  //     LocationProvider().startLocationListener(refreshPostion: LocationProvider().refreshPosition!);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +78,7 @@ class GasStationListBuilder extends StatelessWidget {
         ),
         Expanded(
           child: BlocBuilder<SearchBloc, SearchBlocState>(
+            //TODO: GasStationListBloc
             builder: (context, state) {
               if (state.filteredList.isEmpty) {
                 return const Center(child: CircularProgressIndicator());
