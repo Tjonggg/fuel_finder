@@ -22,24 +22,29 @@ class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
     }
   }
 
+  List<GasStationData> filterGasStationsList(List<GasStationData> fullList, {required String input}) {
+    final filteredList = fullList.where(
+          (gasStationData) {
+        if (gasStationData.name.toLowerCase().contains(input.toLowerCase())) {
+          return true;
+        } else if (gasStationData.street.toLowerCase().contains(input.toLowerCase())) {
+          return true;
+        } else if (gasStationData.city.toLowerCase().contains(input.toLowerCase())) {
+          return true;
+        }
+        return false;
+      },
+    ).toList();
+    return filteredList;
+  }
+
   @override
   Stream<SearchBlocState> mapEventToState(SearchBlocEvent event) async* {
     if (event is SearchEmptyEvent) {
       yield SearchBlocState(filteredList: state.fullList, fullList: state.fullList);
     }
     if (event is SearchInputEvent) {
-      final filteredList = state.fullList.where(
-        (gasStationData) {
-          if (gasStationData.name.toLowerCase().contains(event.input.toLowerCase())) {
-            return true;
-          } else if (gasStationData.street.toLowerCase().contains(event.input.toLowerCase())) {
-            return true;
-          } else if (gasStationData.city.toLowerCase().contains(event.input.toLowerCase())) {
-            return true;
-          }
-          return false;
-        },
-      ).toList();
+      final filteredList = filterGasStationsList(state.fullList, input: event.input);
       yield SearchBlocState(filteredList: filteredList, fullList: state.fullList);
     }
     if (event is SearchInitEvent) {
