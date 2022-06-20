@@ -1,57 +1,56 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:fuel_finder/models/models.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:fuel_finder/services/api_provider/api_provider.dart';
+import 'package:equatable/equatable.dart';
 
 class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
-  final _gasStationApi = GasStationApi(); //TODO inject this API
+  final GasStationApi gasStationApi;
   final _customDelayStream = BehaviorSubject<String>();
 
-  SearchBloc() : super(SearchBlocState(filteredList: [], fullList: [])) {
+  SearchBloc(this.gasStationApi) : super(SearchBlocState(filteredList: [], fullList: [])) {
+    on<SearchInitEvent>(_onSearchInitEvent);
+    on<SearchEmptyEvent>(_onSearchEmptyEvent);
+    on<SearchInputEvent>(_onSearchInputEvent);
     add(const SearchInitEvent());
   }
 
   void onTextFieldChanged(String input) {
     if (input.isNotEmpty) {
-      print("TJONG before debounce $input");
       _customDelayStream.add(input);
     } else {
       add(const SearchEmptyEvent());
     }
   }
 
-  @override
-  Stream<SearchBlocState> mapEventToState(SearchBlocEvent event) async* {
-    if (event is SearchEmptyEvent) {
-      yield SearchBlocState(filteredList: state.fullList, fullList: state.fullList);
-    }
-    if (event is SearchInputEvent) {
-      final filteredList = state.fullList.where(
-        (gasStationData) {
-          if (gasStationData.name.toLowerCase().contains(event.input.toLowerCase())) {
-            return true;
-          } else if (gasStationData.street.toLowerCase().contains(event.input.toLowerCase())) {
-            return true;
-          } else if (gasStationData.city.toLowerCase().contains(event.input.toLowerCase())) {
-            return true;
-          }
-          return false;
-        },
-      ).toList();
-      yield SearchBlocState(filteredList: filteredList, fullList: state.fullList);
-    }
-    if (event is SearchInitEvent) {
-      _customDelayStream.stream.distinct().debounceTime(const Duration(seconds: 1)).listen(
-        (input) {
-          add(SearchInputEvent(input));
-          print("TJONG after adding event $input");
-        },
-      );
-      final gasStationList = await _gasStationApi.getGasStationList();
-      yield SearchBlocState(filteredList: gasStationList, fullList: gasStationList);
-    }
+  void _onSearchInitEvent(SearchInitEvent event, Emitter emit) async {
+    _customDelayStream.stream.distinct().debounceTime(const Duration(seconds: 1)).listen(
+      (input) {
+        add(SearchInputEvent(input));
+      },
+    );
+    final gasStationList = await gasStationApi.getGasStationList();
+    emit(SearchBlocState(filteredList: gasStationList, fullList: gasStationList));
+  }
+
+  void _onSearchEmptyEvent(SearchEmptyEvent event, Emitter emit) async {
+    emit(SearchBlocState(filteredList: state.fullList, fullList: state.fullList));
+  }
+
+  void _onSearchInputEvent(SearchInputEvent event, Emitter emit) async {
+    final filteredList = state.fullList.where(
+      (gasStationData) {
+        if (gasStationData.name.toLowerCase().contains(event.input.toLowerCase())) {
+          return true;
+        } else if (gasStationData.street.toLowerCase().contains(event.input.toLowerCase())) {
+          return true;
+        } else if (gasStationData.city.toLowerCase().contains(event.input.toLowerCase())) {
+          return true;
+        }
+        return false;
+      },
+    ).toList();
+    emit(SearchBlocState(filteredList: filteredList, fullList: state.fullList));
   }
 }
 
@@ -77,12 +76,20 @@ class SearchInitEvent extends SearchBlocEvent {
   const SearchInitEvent();
 }
 
-class SearchBlocState {
+class SearchBlocState extends Equatable {
   final List<GasStationData> filteredList;
   final List<GasStationData> fullList;
 
-  SearchBlocState({
+  const SearchBlocState({
     required this.filteredList,
     required this.fullList,
   });
+
+  @override
+  String toString() {
+    return "filteredList: ${filteredList.length}, fullList: ${fullList.length}";
+  }
+
+  @override
+  List<Object?> get props => [filteredList, fullList];
 }
