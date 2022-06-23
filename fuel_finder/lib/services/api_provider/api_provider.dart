@@ -1,1 +1,1 @@
-export 'gas_station_api.dart';
+export 'api_manager.dart';

@@ -4,7 +4,7 @@ import 'package:fuel_finder/constants/app_sizes.dart';
 import 'package:fuel_finder/features/gas_station_details/widgets/gas_station_appbar_favorite_toggle.dart';
 import 'package:fuel_finder/features/gas_station_details/widgets/gas_station_details_icon.dart';
 import 'package:fuel_finder/features/gas_station_details/widgets/gas_station_details_item.dart';
-import 'package:fuel_finder/models/models.dart';
+import 'package:fuel_finder/features/gas_station_list/gas_station_list.dart';
 import 'package:fuel_finder/shared/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 

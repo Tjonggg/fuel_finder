@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/constants/app_colors.dart';
 import 'package:fuel_finder/features/gas_station_details/gas_station_details_screen.dart';
-import 'package:fuel_finder/models/models.dart';
+import 'package:fuel_finder/features/gas_station_list/gas_station_list.dart';
 import 'package:fuel_finder/shared/widgets/gas_station_logo.dart';
 
 class GasStationListRow extends StatelessWidget {

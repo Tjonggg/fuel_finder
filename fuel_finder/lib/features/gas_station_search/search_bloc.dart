@@ -1,14 +1,14 @@
 import 'package:bloc/bloc.dart';
-import 'package:fuel_finder/models/models.dart';
+import 'package:fuel_finder/features/gas_station_list/gas_station_list.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:fuel_finder/services/api_provider/api_provider.dart';
 import 'package:equatable/equatable.dart';
 
 class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
-  final GasStationApi gasStationApi;
+  final ApiManager gasStationApi;
   final _customDelayStream = BehaviorSubject<String>();
 
-  SearchBloc(this.gasStationApi) : super(SearchBlocState(filteredList: [], fullList: [])) {
+  SearchBloc(this.gasStationApi) : super(const SearchBlocState(filteredList: [], fullList: [])) {
     on<SearchInitEvent>(_onSearchInitEvent);
     on<SearchEmptyEvent>(_onSearchEmptyEvent);
     on<SearchInputEvent>(_onSearchInputEvent);

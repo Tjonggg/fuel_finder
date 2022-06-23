@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 
 import 'geolocator_wrapper.dart';
 
+//TODO: go over this again
 @injectable
 class LocationBloc extends Bloc<LocationBlocEvent, LocationBlocState> {
   final GeolocatorWrapper geolocator;
@@ -13,7 +14,7 @@ class LocationBloc extends Bloc<LocationBlocEvent, LocationBlocState> {
     required this.geolocator,
   }) : super(const LocationBlocState(currentPosition: null, lastKnownPosition: null)) {
     on<StopLocationListeningEvent>(_onStopLocationListeningEvent);
-    on<StartLocationListeningEvent>(_onStartLocationListeningEvent); //Syntatic sugar
+    on<StartLocationListeningEvent>(_onStartLocationListeningEvent);
   }
 
   void _onStartLocationListeningEvent(StartLocationListeningEvent event, Emitter emit) {

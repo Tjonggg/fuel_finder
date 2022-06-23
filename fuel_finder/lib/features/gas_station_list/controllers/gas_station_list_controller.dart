@@ -1,20 +1,15 @@
- //emit(LocationBlocState(lastKnownPosition: currentPosition, currentPosition: currentPosition));
-    // final distance =
-    //       geolocator.distanceBetween(lastKnownPosition.latitude, lastKnownPosition.longitude, currentPosition.latitude, currentPosition.longitude);
+//emit(LocationBlocState(lastKnownPosition: currentPosition, currentPosition: currentPosition));
+// final distance =
+//       geolocator.distanceBetween(lastKnownPosition.latitude, lastKnownPosition.longitude, currentPosition.latitude, currentPosition.longitude);
 // geolocator.distanceBetween(state.lastKnownPosition!.latitude, state.lastKnownPosition!.longitude, currentPosition.latitude, currentPosition.longitude);
-  // var lastKnownPosition = await geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+// var lastKnownPosition = await geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:fuel_finder/models/models.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:fuel_finder/di/injection.dart';
-import 'package:fuel_finder/services/api_provider/gas_station_api.dart';
+import 'package:fuel_finder/services/api_provider/api_manager.dart';
 import 'package:fuel_finder/services/location_provider/location_bloc.dart';
 import 'package:fuel_finder/services/storage_provider/storage_manager.dart';
 
 class GasStationListController {
-  final GasStationApi gasStationApi;
+  final ApiManager gasStationApi;
   final LocationBloc locationProvider;
   final StorageManager storageManager;
 

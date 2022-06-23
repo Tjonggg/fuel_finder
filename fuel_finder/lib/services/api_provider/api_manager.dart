@@ -1,13 +1,13 @@
 import 'dart:convert' as convert;
-import 'package:fuel_finder/models/models.dart';
+import 'package:fuel_finder/features/gas_station_list/gas_station_list.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 
-@injectable
-class GasStationApi {
-  static const String _authority = 'fuelfinder-copy.herokuapp.com';
-  static const String _unencodedPath = '/stations.json';
+const String _authority = 'fuelfinder-copy.herokuapp.com';
+const String _unencodedPath = '/stations.json';
 
+@injectable
+class ApiManager {
   Future<List<GasStationData>> getGasStationList() async {
     final _uri = Uri.http(_authority, _unencodedPath);
     final _response = await http.get(_uri);
@@ -17,6 +17,7 @@ class GasStationApi {
 
       return GasStationData.mapFromSnapshot(_data);
     } else {
+      //TODO: improvement needed
       throw Exception('Server response not ok');
     }
   }

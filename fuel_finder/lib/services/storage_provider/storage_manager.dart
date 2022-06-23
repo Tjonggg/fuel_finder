@@ -1,11 +1,11 @@
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+const _favoritesListKey = 'favorites';
+
 @injectable
 class StorageManager {
-  static const _favoritesListKey = 'favorites';
-
-  //TODO: _favoritesList, _storageList OK?
+  //TODO: _favoritesList, _storageList OK? refactor into BLOC or something else
   Future<bool> isFavorite({required int id}) async {
     final List<String> _favoritesList = await getFavoritesList();
 

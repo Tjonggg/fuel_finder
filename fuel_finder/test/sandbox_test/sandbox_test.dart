@@ -1,25 +1,36 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:bloc_test/bloc_test.dart';
-import 'package:fuel_finder/features/gas_station_search/gas_station_search.dart';
-import 'package:fuel_finder/services/api_provider/api_provider.dart';
-import 'package:mocktail/mocktail.dart';
-
-class MockGasStationApi extends Mock implements GasStationApi {}
+import 'package:fuel_finder/sandbox/sandbox.dart';
 
 void main() {
-  final mockGasStationApi = MockGasStationApi();
+  setUp(() {
+    print("From within setUp()");
+  });
 
-  group(
-    'SearchBloc',
-    () {
-      when(() => mockGasStationApi.getGasStationList()).thenAnswer((_) async => []);
-      blocTest(
-        'emits empty SearchBlocState when there is no input',
-        build: () => SearchBloc(mockGasStationApi),
-        expect: () => [const SearchBlocState(filteredList: [], fullList: [])],
-      );
-    },
-  );
+  setUpAll(() {
+    print("From within setUpAll()");
+  });
+
+  tearDown(() {
+    print("From within tearDown()");
+  });
+
+  tearDownAll(() {
+    print("From within tearDownAll()");
+  });
+
+  group("Unit tests for Flutter training day 5", () {
+    test("StringHelper toUppercase test", () {
+      final sut = StringHelper();
+      final output = sut.toUpperCase("tjong");
+      expect(output, "TJONG");
+    });
+
+    test("StringHelper toLowercase test", () {
+      final sut = StringHelper();
+      final output = sut.toLowerCase("TJONG");
+      expect(output, "tjong");
+    });
+  });
 }
 
 // import 'package:collection/collection.dart';

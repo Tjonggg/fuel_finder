@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'constants/constants.dart';
-import 'features/gas_station_details/gas_station_details.dart';
-import 'features/gas_station_list/gas_station_list.dart';
+import 'package:fuel_finder/constants/constants.dart';
+import 'package:fuel_finder/features/gas_station_details/gas_station_details.dart';
+import 'package:fuel_finder/features/gas_station_list/gas_station_list.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -16,10 +15,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: AppColors.coreRed,
       ),
-      home: const Locator(),
+      home: const GasStationListProvider(),
       routes: {
-        GasStationListScreen.id: (context) => const Locator(),
-        GasStationDetailsScreen.id: (context) => const GasStationDetailsScreen(),
+        GasStationListScreen.id: (context) => const GasStationListProvider(),
+        GasStationDetailsScreen.id: (context) => const GasStationDetailsProvider(),
       },
       initialRoute: GasStationListScreen.id,
       navigatorObservers: [routeObserver],

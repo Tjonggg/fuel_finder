@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fuel_finder/app.dart';
 import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_appbar_favorites_list_toggle.dart';
 import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_list_row.dart';
 import 'package:fuel_finder/features/gas_station_search/gas_station_search.dart';
-import 'package:fuel_finder/services/location_provider/location_bloc.dart';
+import 'package:fuel_finder/ui/ui.dart';
 import 'package:provider/provider.dart';
 
 class GasStationListScreen extends StatefulWidget {

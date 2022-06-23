@@ -8,13 +8,14 @@ class GasStationAppBarFavoritesListToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _gasStationListProvider = Provider.of<GasStationListController>(context);
+    //final _gasStationListProvider = Provider.of<GasStationListController>(context);
     return Padding(
       padding: const EdgeInsets.only(right: AppSizes.appBarIconPadding),
       child: GestureDetector(
         onTap: () {
           //_gasStationListProvider.toggleFavoriteList();
         },
+        child: const Icon(Icons.bookmark),
         // child: ValueListenableBuilder(
         //   //TODO is there a better way?
         //   valueListenable: _gasStationListProvider.showFavoritesList,

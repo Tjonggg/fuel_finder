@@ -6,7 +6,9 @@ class GasStationFavoriteManager {
   final StorageManager storageManager;
   final gasStationFavoriteNotifier = GasStationFavoriteNotifier();
 
-  GasStationFavoriteManager(this.storageManager);
+  GasStationFavoriteManager({
+    required this.storageManager,
+  });
 
   Future<void> initFavorite({required int id}) async {
     gasStationFavoriteNotifier.value = await storageManager.isFavorite(id: id);
