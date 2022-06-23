@@ -11,7 +11,7 @@ void main() {
   runApp(const MyApp());
 }
 
-//This is just a temporary workaround
+//This class is a temporary workaround
 //For more info check => https://flutteragency.com/solve-flutter-certificate_verify_failed-error-while-performing-a-post-request/
 class MyHttpOverrides extends HttpOverrides {
   @override
