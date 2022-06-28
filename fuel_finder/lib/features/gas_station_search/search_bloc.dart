@@ -33,11 +33,11 @@ class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
     emit(SearchBlocState(filteredList: gasStationList, fullList: gasStationList));
   }
 
-  void _onSearchEmptyEvent(SearchEmptyEvent event, Emitter emit) async {
+  void _onSearchEmptyEvent(SearchEmptyEvent event, Emitter emit) {
     emit(SearchBlocState(filteredList: state.fullList, fullList: state.fullList));
   }
 
-  void _onSearchInputEvent(SearchInputEvent event, Emitter emit) async {
+  void _onSearchInputEvent(SearchInputEvent event, Emitter emit) {
     final filteredList = state.fullList.where(
       (gasStationData) {
         if (gasStationData.name.toLowerCase().contains(event.input.toLowerCase())) {
@@ -60,10 +60,6 @@ class SearchBlocEvent {
 
 class SearchEmptyEvent extends SearchBlocEvent {
   const SearchEmptyEvent();
-}
-
-class SearchTypingEvent extends SearchBlocEvent {
-  const SearchTypingEvent(); //TODO: try :)
 }
 
 class SearchInputEvent extends SearchBlocEvent {

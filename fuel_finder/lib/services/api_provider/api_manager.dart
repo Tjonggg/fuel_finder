@@ -12,12 +12,12 @@ class ApiManager {
     final _uri = Uri.http(_authority, _unencodedPath);
     final _response = await http.get(_uri);
 
+    //TODO: improvement needed
     if (_response.statusCode == 200) {
       List _data = convert.jsonDecode(_response.body) as List<dynamic>;
 
       return GasStationData.mapFromSnapshot(_data);
     } else {
-      //TODO: improvement needed
       throw Exception('Server response not ok');
     }
   }

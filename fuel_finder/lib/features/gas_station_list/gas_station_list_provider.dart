@@ -17,7 +17,6 @@ class GasStationListProvider extends StatelessWidget {
       providers: [
         Provider<GasStationListController>(
           create: (_) => GasStationListController(
-            storageManager: getIt<StorageManager>(),
             gasStationApi: getIt<ApiManager>(),
             locationProvider: getIt<LocationBloc>(),
           ),

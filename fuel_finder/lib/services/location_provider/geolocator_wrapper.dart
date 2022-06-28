@@ -1,7 +1,15 @@
 import 'package:geolocator/geolocator.dart';
 
-//TODO: add some info about this wrapper
+//Wrapper created because 'getPostionStream' a static method can't be accessed through an instance and dependency injection
 class GeolocatorWrapper {
+  Stream<Position> getPositionStream({
+    LocationSettings? locationSettings,
+  }) {
+    return Geolocator.getPositionStream(
+      locationSettings: locationSettings,
+    );
+  }
+
   Future<Position> getCurrentPosition({
     LocationAccuracy desiredAccuracy = LocationAccuracy.best,
     bool forceAndroidLocationManager = false,
@@ -11,14 +19,6 @@ class GeolocatorWrapper {
       desiredAccuracy: desiredAccuracy,
       forceAndroidLocationManager: forceAndroidLocationManager,
       timeLimit: timeLimit,
-    );
-  }
-
-  Stream<Position> getPositionStream({
-    LocationSettings? locationSettings,
-  }) {
-    return Geolocator.getPositionStream(
-      locationSettings: locationSettings,
     );
   }
 

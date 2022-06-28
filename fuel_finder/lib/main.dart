@@ -11,8 +11,9 @@ void main() {
   runApp(const MyApp());
 }
 
-//This class is a temporary workaround
-//For more info check => https://flutteragency.com/solve-flutter-certificate_verify_failed-error-while-performing-a-post-request/
+/// This class is a temporary workaround
+/// For more info check => https://flutteragency.com/solve-flutter-certificate_verify_failed-error-while-performing-a-post-request/
+/// TODO: this is not ok for production!!!
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {

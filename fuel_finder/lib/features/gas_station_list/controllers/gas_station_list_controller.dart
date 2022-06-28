@@ -6,15 +6,12 @@
 
 import 'package:fuel_finder/services/api_provider/api_manager.dart';
 import 'package:fuel_finder/services/location_provider/location_bloc.dart';
-import 'package:fuel_finder/services/storage_provider/storage_manager.dart';
 
 class GasStationListController {
   final ApiManager gasStationApi;
   final LocationBloc locationProvider;
-  final StorageManager storageManager;
 
   GasStationListController({
-    required this.storageManager,
     required this.gasStationApi,
     required this.locationProvider,
   });

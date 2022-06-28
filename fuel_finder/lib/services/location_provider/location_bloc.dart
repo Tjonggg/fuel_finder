@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fuel_finder/constants/constants.dart';
 import 'package:geolocator/geolocator.dart';
@@ -5,20 +7,20 @@ import 'package:injectable/injectable.dart';
 
 import 'geolocator_wrapper.dart';
 
-//TODO: go over this again
 @injectable
 class LocationBloc extends Bloc<LocationBlocEvent, LocationBlocState> {
   final GeolocatorWrapper geolocator;
+  StreamSubscription? _positionSubscription;
 
   LocationBloc({
     required this.geolocator,
   }) : super(const LocationBlocState(currentPosition: null, lastKnownPosition: null)) {
-    on<StopLocationListeningEvent>(_onStopLocationListeningEvent);
     on<StartLocationListeningEvent>(_onStartLocationListeningEvent);
+    on<StopLocationListeningEvent>(_onStopLocationListeningEvent);
   }
 
   void _onStartLocationListeningEvent(StartLocationListeningEvent event, Emitter emit) {
-    geolocator
+    _positionSubscription = geolocator
         .getPositionStream(
           locationSettings: AppPreferences.highLocationAccuracySettings,
         )
@@ -26,15 +28,16 @@ class LocationBloc extends Bloc<LocationBlocEvent, LocationBlocState> {
   }
 
   void _onPositionChanged(Position currentPosition, Emitter emit) {
-    final lastKnownPosition = state.lastKnownPosition;
-    if (lastKnownPosition == null) {
+    final _lastKnownPosition = state.lastKnownPosition; //TODO: update lastKnowPosition when changed => move to GasStationListBloc
+    if (_lastKnownPosition == null) {
       emit(LocationBlocState(lastKnownPosition: currentPosition, currentPosition: currentPosition));
     } else {
-      emit(LocationBlocState(lastKnownPosition: lastKnownPosition, currentPosition: currentPosition));
+      emit(LocationBlocState(lastKnownPosition: _lastKnownPosition, currentPosition: currentPosition));
     }
   }
 
   void _onStopLocationListeningEvent(StopLocationListeningEvent event, Emitter emit) {
+    _positionSubscription?.cancel();
     emit(const LocationBlocState(currentPosition: null, lastKnownPosition: null));
   }
 }

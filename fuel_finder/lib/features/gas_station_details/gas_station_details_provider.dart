@@ -11,14 +11,11 @@ class GasStationDetailsProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(
-          create: (context) => StorageManager(),
-        ),
-        Provider(
-          create: (context) => GasStationFavoriteManager(
-            storageManager: getIt<StorageManager>(),
-          ),
-        ),
+        // Provider(
+        //   create: (context) => GasStationFavoriteManager(
+        //     storageManager: getIt<StorageBloc>(),
+        //   ),
+        // ),
       ],
       child: const GasStationDetailsScreen(),
     );
