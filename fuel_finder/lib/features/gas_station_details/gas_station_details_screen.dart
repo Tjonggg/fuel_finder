@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/constants/app_colors.dart';
 import 'package:fuel_finder/constants/app_sizes.dart';
-import 'package:fuel_finder/features/gas_station_details/widgets/gas_station_appbar_favorite_toggle.dart';
 import 'package:fuel_finder/features/gas_station_details/widgets/gas_station_details_icon.dart';
 import 'package:fuel_finder/features/gas_station_details/widgets/gas_station_details_item.dart';
 import 'package:fuel_finder/features/gas_station_list/gas_station_list.dart';
 import 'package:fuel_finder/features/shared/widgets/widgets.dart';
-import 'package:provider/provider.dart';
 
 class GasStationDetailsScreen extends StatelessWidget {
   static const String id = 'gas_station_details_screen';
 
-  const GasStationDetailsScreen({Key? key}) : super(key: key);
+  final GasStationData gasStationData;
+
+  const GasStationDetailsScreen(this.gasStationData, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _gasStationData = ModalRoute.of(context)!.settings.arguments as GasStationData;
-    //final _gasStationManager = Provider.of<GasStationFavoriteManager>(context);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.coreRed,
@@ -43,7 +40,7 @@ class GasStationDetailsScreen extends StatelessWidget {
               Row(
                 children: [
                   GasStationLogo(
-                    logoUrl: _gasStationData.logo,
+                    logoUrl: gasStationData.logo,
                     logoWidth: 100,
                   ),
                   Padding(
@@ -52,7 +49,7 @@ class GasStationDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _gasStationData.name,
+                          gasStationData.name,
                           style: const TextStyle(
                             color: AppColors.coreRed,
                             fontWeight: FontWeight.bold,
@@ -60,14 +57,14 @@ class GasStationDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          _gasStationData.street,
+                          gasStationData.street,
                           style: const TextStyle(
                             color: AppColors.coreGrey,
                             fontSize: 10,
                           ),
                         ),
                         Text(
-                          _gasStationData.city,
+                          gasStationData.city,
                           style: const TextStyle(
                             color: AppColors.coreGrey,
                             fontSize: 10,
@@ -81,7 +78,7 @@ class GasStationDetailsScreen extends StatelessWidget {
               const SizedBox(
                 height: AppSizes.paddingLarge,
               ),
-              _gasStationData.distance == null
+              gasStationData.distance == null
                   ? const SizedBox.shrink()
                   : Padding(
                       padding: const EdgeInsets.all(AppSizes.paddingMedium),
@@ -92,7 +89,7 @@ class GasStationDetailsScreen extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.only(left: AppSizes.paddingLarge, top: 0),
                             child: Text(
-                              _gasStationData.distance!,
+                              gasStationData.distance!,
                               style: const TextStyle(
                                 color: AppColors.coreGrey,
                                 fontSize: 18,
@@ -104,15 +101,15 @@ class GasStationDetailsScreen extends StatelessWidget {
                     ),
               GasStationDetailsItem(
                 icon: 'assets/icons/icon_products.png',
-                item: _gasStationData.products!,
+                item: gasStationData.products!,
               ),
               GasStationDetailsItem(
                 icon: 'assets/icons/icon_payments.png',
-                item: _gasStationData.payments!,
+                item: gasStationData.payments!,
               ),
               GasStationDetailsItem(
                 icon: 'assets/icons/icon_extras.png',
-                item: _gasStationData.extras!,
+                item: gasStationData.extras!,
               ),
             ],
           ),

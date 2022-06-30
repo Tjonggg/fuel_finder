@@ -92,3 +92,32 @@
 // class InitEvent extends FavoriteBlocEvent {
 //   const InitEvent();
 // }
+
+//   Future<void> toggleFavoriteList() async {
+//     final _favoritesList = await storageManager.getFavoritesList();
+
+//     if (_gasStationList == null) {
+//       try {
+//         _gasStationList = await gasStationApi.getGasStationList();
+//       } catch (e) {
+//         throw Exception("Couldn't fetch gas station list: $e");
+//       }
+//     }
+
+//     if (!showFavoritesList.value) {
+//       _getGasStationListStreamController.add(_gasStationList!.where(
+//         (value) {
+//           if (_favoritesList.contains(value.id.toString())) {
+//             return true;
+//           }
+//           return false;
+//         },
+//       ).toList());
+
+//       showFavoritesList.value = true;
+//     } else {
+//       _getGasStationListStreamController.add(_gasStationList!);
+//       showFavoritesList.value = false;
+//     }
+//   }
+// }

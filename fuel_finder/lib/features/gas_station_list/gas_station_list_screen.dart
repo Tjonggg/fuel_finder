@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_appbar_favorites_list_toggle.dart';
+import 'package:fuel_finder/features/gas_station_list/gas_station_list.dart';
 import 'package:fuel_finder/features/gas_station_list/widgets/gas_station_list_row.dart';
-import 'package:fuel_finder/features/gas_station_search/gas_station_search.dart';
 import 'package:fuel_finder/ui/ui.dart';
 import 'package:provider/provider.dart';
 
@@ -51,9 +50,9 @@ class _GasStationListScreenState extends State<GasStationListScreen> with RouteA
     return Scaffold(
       appBar: AppBar(
         title: const Text('Fuel Finder'),
-        actions: const [
-          GasStationAppBarFavoritesListToggle(),
-        ],
+        // actions: const [
+        //   GasStationAppBarFavoritesListToggle(),
+        // ],
       ),
       body: const GasStationListBuilder(),
     );
@@ -65,27 +64,24 @@ class GasStationListBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final _gasStationListProvider = Provider.of<GasStationListController>(context);
-    // _gasStationListProvider.initGasStationList();
     return Column(
       children: [
         TextField(
           textAlign: TextAlign.center,
           showCursor: false,
-          onChanged: Provider.of<SearchBloc>(context).onTextFieldChanged,
+          onChanged: Provider.of<GasStationListBloc>(context).onTextFieldChanged,
           decoration: const InputDecoration(hintText: 'Search'),
         ),
         Expanded(
-          child: BlocBuilder<SearchBloc, SearchBlocState>(
-            //TODO: GasStationListBloc
+          child: BlocBuilder<GasStationListBloc, GasStationListBlocState>(
             builder: (context, state) {
-              if (state.filteredList.isEmpty) {
+              if (state.gasStationList.isEmpty) {
                 return const Center(child: CircularProgressIndicator());
               } else {
                 return ListView.builder(
-                  itemCount: state.filteredList.length,
+                  itemCount: state.gasStationList.length,
                   itemBuilder: (context, index) {
-                    return GasStationListRow(gasStationData: state.filteredList[index]);
+                    return GasStationListRow(gasStationData: state.gasStationList[index]);
                   },
                 );
               }

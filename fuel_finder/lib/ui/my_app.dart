@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
       ),
       home: const GasStationListProvider(),
       routes: {
-        GasStationListScreen.id: (context) => const GasStationListProvider(),
-        GasStationDetailsScreen.id: (context) => const GasStationDetailsProvider(),
+        GasStationListScreen.id: (_) => const GasStationListProvider(),
+        GasStationDetailsScreen.id: (_) => const GasStationDetailsProvider(),
       },
       initialRoute: GasStationListScreen.id,
       navigatorObservers: [routeObserver],

@@ -11,6 +11,7 @@ class StorageBloc extends Bloc<StorageBlocEvent, StorageBlocState> {
     on<InitStorageEvent>(_onInitStorageEvent);
     on<GetStorageEvent>(_onGetStorageEvent);
     on<UpdateDistinctStorageEvent>(_onUpdateDistinctStorageEvent);
+    add(const InitStorageEvent());
   }
 
   void _onInitStorageEvent(InitStorageEvent event, Emitter emit) async {
