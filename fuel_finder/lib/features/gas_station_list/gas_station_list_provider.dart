@@ -3,6 +3,7 @@ import 'package:fuel_finder/di/di.dart';
 import 'package:fuel_finder/features/gas_station_list/gas_station_list.dart';
 import 'package:fuel_finder/features/gas_station_search/gas_station_search.dart';
 import 'package:fuel_finder/services/api_provider/api_provider.dart';
+import 'package:fuel_finder/services/location_provider/location_provider.dart';
 import 'package:provider/provider.dart';
 
 class GasStationListProvider extends StatelessWidget {
@@ -16,6 +17,7 @@ class GasStationListProvider extends StatelessWidget {
           create: (_) => GasStationListBloc(
             apiManager: getIt<ApiManager>(),
             searchBloc: getIt<SearchBloc>(),
+            locationBloc: getIt<LocationBloc>(),
           ),
         ),
       ],

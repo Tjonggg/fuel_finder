@@ -14,7 +14,7 @@ class LocationBloc extends Bloc<LocationBlocEvent, LocationBlocState> {
 
   LocationBloc({
     required this.geolocator,
-  }) : super(const LocationBlocState(currentPosition: null, lastKnownPosition: null)) {
+  }) : super(const LocationBlocState(currentPosition: null)) {
     on<StartLocationListeningEvent>(_onStartLocationListeningEvent);
     on<StopLocationListeningEvent>(_onStopLocationListeningEvent);
   }
@@ -22,23 +22,19 @@ class LocationBloc extends Bloc<LocationBlocEvent, LocationBlocState> {
   void _onStartLocationListeningEvent(StartLocationListeningEvent event, Emitter emit) {
     _positionSubscription = geolocator
         .getPositionStream(
-          locationSettings: AppPreferences.highLocationAccuracySettings,
-        )
-        .listen((position) => _onPositionChanged(position, emit));
-  }
-
-  void _onPositionChanged(Position currentPosition, Emitter emit) {
-    final _lastKnownPosition = state.lastKnownPosition; //TODO: update lastKnowPosition when changed => move to GasStationListBloc
-    if (_lastKnownPosition == null) {
-      emit(LocationBlocState(lastKnownPosition: currentPosition, currentPosition: currentPosition));
-    } else {
-      emit(LocationBlocState(lastKnownPosition: _lastKnownPosition, currentPosition: currentPosition));
-    }
+      locationSettings: AppPreferences.highLocationAccuracySettings,
+    )
+        .listen(
+      (position) {
+        print('TEST: $position');
+        //emit(LocationBlocState(currentPosition: position));
+      },
+    );
   }
 
   void _onStopLocationListeningEvent(StopLocationListeningEvent event, Emitter emit) {
     _positionSubscription?.cancel();
-    emit(const LocationBlocState(currentPosition: null, lastKnownPosition: null));
+    emit(const LocationBlocState(currentPosition: null));
   }
 }
 
@@ -56,10 +52,8 @@ class StopLocationListeningEvent extends LocationBlocEvent {
 
 class LocationBlocState {
   final Position? currentPosition;
-  final Position? lastKnownPosition;
 
   const LocationBlocState({
     required this.currentPosition,
-    required this.lastKnownPosition,
   });
 }

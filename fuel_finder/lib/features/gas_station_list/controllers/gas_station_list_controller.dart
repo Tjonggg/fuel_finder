@@ -2,44 +2,7 @@
 // final distance =
 //       geolocator.distanceBetween(lastKnownPosition.latitude, lastKnownPosition.longitude, currentPosition.latitude, currentPosition.longitude);
 // geolocator.distanceBetween(state.lastKnownPosition!.latitude, state.lastKnownPosition!.longitude, currentPosition.latitude, currentPosition.longitude);
-// var lastKnownPosition = await geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 // + last know position, niet in bbbloc
-
-// import 'package:fuel_finder/services/api_provider/api_manager.dart';
-// import 'package:fuel_finder/services/location_provider/location_bloc.dart';
-
-// class GasStationListController {
-//   final ApiManager gasStationApi;
-//   final LocationBloc locationProvider;
-
-//   GasStationListController({
-//     required this.gasStationApi,
-//     required this.locationProvider,
-//   });
-
-//   //TODO add dispose of all the streams
-//   List<GasStationData>? _gasStationList;
-//   bool enableLocationRefresh = true;
-//   final ValueNotifier<bool> showFavoritesList = ValueNotifier<bool>(false);
-
-//   final StreamController<List<GasStationData>> _getGasStationListStreamController = StreamController<List<GasStationData>>.broadcast();
-//   Stream<List<GasStationData>> get getGasStationListStream => _getGasStationListStreamController.stream;
-
-//   Future<void> initGasStationList() async {
-//     try {
-//       _gasStationList = await gasStationApi.getGasStationList();
-//     } catch (e) {
-//       throw Exception("Couldn't fetch gas station list: $e");
-//     }
-
-//     if (_gasStationList != null) {
-//       _gasStationList!.sort(((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase())));
-
-//       _getGasStationListStreamController.add(_gasStationList!);
-
-//       _refreshGasStationList();
-//     }
-//   }
 
 //   void _refreshGasStationList() {
 //     double _distance;
