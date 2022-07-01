@@ -9,7 +9,7 @@ class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
 
   SearchBloc() : super(const SearchBlocState(filteredList: [])) {
     on<SearchInitEvent>(_onSearchInitEvent);
-    // on<SearchEmptyEvent>(_onSearchEmptyEvent);
+    on<SearchEmptyEvent>(_onSearchEmptyEvent);
     on<SearchInputEvent>(_onSearchInputEvent);
     add(const SearchInitEvent());
   }
@@ -17,10 +17,12 @@ class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
   void onTextFieldInput(GasStationSearchData gasStationSearchData) {
     if (gasStationSearchData.searchInput.isNotEmpty) {
       _customDelayStream.add(gasStationSearchData);
+    } else {
+      add(const SearchEmptyEvent());
     }
   }
 
-  void _onSearchInitEvent(SearchInitEvent event, Emitter emit) async {
+  void _onSearchInitEvent(SearchInitEvent event, Emitter emit) {
     _customDelayStream.stream.distinct().debounceTime(const Duration(seconds: 1)).listen(
       (debouncedGasStationSearchData) {
         add(SearchInputEvent(debouncedGasStationSearchData));
@@ -44,9 +46,9 @@ class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
     emit(SearchBlocState(filteredList: filteredList));
   }
 
-  // void _onSearchEmptyEvent(SearchEmptyEvent event, Emitter emit) {
-  //   emit(const SearchBlocState(filteredList: []));
-  // }
+  void _onSearchEmptyEvent(SearchEmptyEvent event, Emitter emit) {
+    emit(const SearchBlocState(filteredList: []));
+  }
 }
 
 class SearchBlocEvent {
@@ -63,9 +65,9 @@ class SearchInputEvent extends SearchBlocEvent {
   const SearchInputEvent(this.gasStationSearchData);
 }
 
-// class SearchEmptyEvent extends SearchBlocEvent {
-//   const SearchEmptyEvent();
-// }
+class SearchEmptyEvent extends SearchBlocEvent {
+  const SearchEmptyEvent();
+}
 
 class SearchBlocState extends Equatable {
   final List<GasStationData> filteredList;

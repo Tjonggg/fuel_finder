@@ -13,7 +13,7 @@ class GasStationListProvider extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<GasStationListBloc>(
-          create: (context) => GasStationListBloc(
+          create: (_) => GasStationListBloc(
             apiManager: getIt<ApiManager>(),
             searchBloc: getIt<SearchBloc>(),
           ),

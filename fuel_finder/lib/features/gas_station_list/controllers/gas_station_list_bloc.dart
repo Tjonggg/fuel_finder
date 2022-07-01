@@ -9,8 +9,6 @@ class GasStationListBloc extends Bloc<GasStationListBlocEvent, GasStationListBlo
 
   List<GasStationData>? _gasStationList;
 
-  var _gasStationSearchData = GasStationSearchData('', []);
-
   GasStationListBloc({
     required this.apiManager,
     required this.searchBloc,
@@ -18,6 +16,11 @@ class GasStationListBloc extends Bloc<GasStationListBlocEvent, GasStationListBlo
     on<ShowGasStationListEvent>(_onShowGasStationListEvent);
     on<ShowFilteredGasStationListEvent>(_onShowFilteredGasStationListEvent);
     add(ShowGasStationListEvent());
+    searchBloc.stream.listen((state) {
+      if (state.filteredList.isNotEmpty) {
+        add(ShowFilteredGasStationListEvent(state.filteredList));
+      }
+    });
   }
 
   void _onShowGasStationListEvent(ShowGasStationListEvent event, Emitter emit) async {
@@ -40,13 +43,11 @@ class GasStationListBloc extends Bloc<GasStationListBlocEvent, GasStationListBlo
   }
 
   void onTextFieldChanged(String textFieldInput) async {
+    var _gasStationSearchData = GasStationSearchData('', []);
     if (textFieldInput.isNotEmpty) {
       _gasStationSearchData.searchInput = textFieldInput;
       _gasStationSearchData.searchList = _gasStationList!;
-
-      // searchBloc.onTextFieldInput(_gasStationSearchData);
-      // var searchBlocState = searchBloc.stream.last;
-      // add(ShowFilteredGasStationListEvent(searchBlocState.));
+      searchBloc.onTextFieldInput(_gasStationSearchData);
     } else {
       add(ShowGasStationListEvent());
     }
