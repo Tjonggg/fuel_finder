@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_finder/constants/app_sizes.dart';
-import 'package:fuel_finder/features/gas_station_list/controllers/gas_station_list_controller.dart';
 import 'package:provider/provider.dart';
 
 class GasStationAppBarFavoritesListToggle extends StatelessWidget {

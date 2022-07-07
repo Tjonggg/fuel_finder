@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:fuel_finder/features/gas_station_list/gas_station_list.dart';
 import 'package:fuel_finder/features/gas_station_search/gas_station_search.dart';
+import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:equatable/equatable.dart';
 
@@ -40,6 +41,8 @@ class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
   void onTextFieldInput(GasStationSearchData gasStationSearchData) {
     if (gasStationSearchData.searchInput.isNotEmpty) {
       _customDelayStream.add(gasStationSearchData);
+    } else {
+      const SearchBlocState(filteredList: []);
     }
   }
 }
