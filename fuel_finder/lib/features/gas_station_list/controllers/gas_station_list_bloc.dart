@@ -8,15 +8,16 @@ import 'package:rxdart/rxdart.dart';
 
 class GasStationListBloc extends Bloc<GasStationListBlocEvent, GasStationListBlocState> {
   final ApiManager apiManager;
-  final LocationBloc locationBloc;
+  final LocationManager locationManager;
 
   List<GasStationData>? _gasStationList;
   Position? _lastKnownPosition;
   final _customDelayStream = BehaviorSubject<String>();
+  bool _showOtherList = false;
 
   GasStationListBloc({
     required this.apiManager,
-    required this.locationBloc,
+    required this.locationManager,
   }) : super(const GasStationListBlocState([])) {
     on<_ShowGasStationListEvent>(_onShowGasStationListEvent);
     on<_ShowLocationGasStationListEvent>(_onShowLocationGasStationListEvent);
@@ -24,51 +25,19 @@ class GasStationListBloc extends Bloc<GasStationListBlocEvent, GasStationListBlo
 
     add(_ShowGasStationListEvent());
 
-    // searchBloc.stream.listen(
-    //   (state) {
-    //     if (state.filteredList.isNotEmpty) {
-    //       locationBloc.add(StopLocationListeningEvent());
-    //       add(_ShowFilteredGasStationListEvent(state.filteredList));
-    //     }
-    //   },
-    // );
     _customDelayStream.stream.distinct().debounceTime(const Duration(seconds: 1)).listen(
       (debouncedString) {
         add(_ShowFilteredGasStationListEvent(debouncedString));
       },
     );
-
-    locationBloc.stream.listen(
-      (state) {
-        if (state.newPosition != null) {
-          final _newDistance = locationBloc.geolocator.distanceBetween(
-            _lastKnownPosition!.latitude,
-            _lastKnownPosition!.longitude,
-            state.newPosition!.latitude,
-            state.newPosition!.longitude,
-          );
-          if (_newDistance > 100) {
-            print('100 m difference!');
-            _lastKnownPosition = state.newPosition;
-            add(_ShowLocationGasStationListEvent());
-          }
-        }
-      },
-    );
   }
+
+  // EVENTS //
 
   void _onShowGasStationListEvent(_, Emitter emit) async {
     final _isLocationPermissionOk = await _checkLocationPermission();
     if (_isLocationPermissionOk) {
-      if (_gasStationList == null || _lastKnownPosition == null) {
-        try {
-          await _initGasStationListBloc();
-        } catch (e) {
-          throw Exception("Couldn't init gasstationlist and lastknownposition");
-        }
-      }
-      locationBloc.add(StartLocationListeningEvent());
-      add(_ShowLocationGasStationListEvent());
+      _onLocationAvailable();
     } else {
       if (_gasStationList != null) {
         emit(GasStationListBlocState(_gasStationList!));
@@ -85,25 +54,24 @@ class GasStationListBloc extends Bloc<GasStationListBlocEvent, GasStationListBlo
     }
   }
 
-  void _onShowLocationGasStationListEvent(_ShowLocationGasStationListEvent event, Emitter emit) {
-    print('Nieuwe lijst');
+  void _onShowLocationGasStationListEvent(_, Emitter emit) {
+    print('Location refresh');
     emit(GasStationListBlocState(_sortLocationGasStationList()));
   }
 
   void _onShowFilteredGasStationListEvent(_ShowFilteredGasStationListEvent event, Emitter emit) {
+    //locationManager.pauseLocationStream();
     emit(GasStationListBlocState(_filterGasStationList(event.searchInput)));
   }
 
+  // METHODS //
   void onTextFieldChanged(String textFieldInput) {
-    //var _gasStationSearchData = GasStationSearchData('', []);
-
-    if (textFieldInput.isNotEmpty) {
-      // _gasStationSearchData.searchInput = textFieldInput;
-      // _gasStationSearchData.searchList = _gasStationList!;
-      // searchBloc.onTextFieldInput(_gasStationSearchData);
-      _customDelayStream.add(textFieldInput);
-    } else {
+    if (textFieldInput.isEmpty) {
+      _showOtherList = false;
       add(_ShowGasStationListEvent());
+    } else {
+      _showOtherList = true;
+      _customDelayStream.add(textFieldInput);
     }
   }
 
@@ -125,7 +93,7 @@ class GasStationListBloc extends Bloc<GasStationListBlocEvent, GasStationListBlo
 
   Future<void> _initGasStationListBloc() async {
     _gasStationList = await apiManager.getGasStationList();
-    _lastKnownPosition = await locationBloc.geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    _lastKnownPosition = await locationManager.geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
   //Nice to have: make a generic permission provider
@@ -151,10 +119,36 @@ class GasStationListBloc extends Bloc<GasStationListBlocEvent, GasStationListBlo
     return false;
   }
 
+  void _onLocationAvailable() async {
+    locationManager.playLocationStream();
+    if (_gasStationList == null || _lastKnownPosition == null) {
+      try {
+        await _initGasStationListBloc();
+      } catch (e) {
+        throw Exception("Couldn't init gasstationlist and lastknownposition");
+      }
+    }
+    add(_ShowLocationGasStationListEvent());
+
+    locationManager.positionStream.asBroadcastStream().listen(
+      (newPosition) {
+        final _newDistance = locationManager.geolocator
+            .distanceBetween(_lastKnownPosition!.latitude, _lastKnownPosition!.longitude, newPosition.latitude, newPosition.longitude);
+        if (_newDistance > 100) {
+          _lastKnownPosition = newPosition;
+          if (!_showOtherList) {
+            print('Nieuwe lijst na 100m');
+            add(_ShowLocationGasStationListEvent());
+          }
+        }
+      },
+    );
+  }
+
   List<GasStationData> _sortLocationGasStationList() {
     double _distanceToLastKnowPosition = 0;
     for (var _gasStationListDistance in _gasStationList!) {
-      _distanceToLastKnowPosition = locationBloc.geolocator.distanceBetween(
+      _distanceToLastKnowPosition = locationManager.geolocator.distanceBetween(
           _lastKnownPosition!.latitude, _lastKnownPosition!.longitude, _gasStationListDistance.latitude, _gasStationListDistance.longitude);
       _gasStationListDistance.distance = _distanceToLastKnowPosition.toStringAsFixed(0);
     }
@@ -177,6 +171,8 @@ class GasStationListBloc extends Bloc<GasStationListBlocEvent, GasStationListBlo
     return _gasStationList!;
   }
 }
+
+// EVENTS AND STATE CLASSES //
 
 class GasStationListBlocEvent {}
 

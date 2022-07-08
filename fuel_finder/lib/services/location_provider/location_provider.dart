@@ -1,2 +1,2 @@
-export 'location_bloc.dart';
+export 'location_manager.dart';
 export 'geolocator_wrapper.dart';
